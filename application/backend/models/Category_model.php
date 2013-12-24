@@ -2,7 +2,7 @@
 class Category_model extends CI_Model
 {
 
-	protected $table_name = 'tbl_category';
+	protected $table_name = 'shop_category';
 
 	public function __construct()
 	{
@@ -16,7 +16,7 @@ class Category_model extends CI_Model
 			$this->db->where($whereclause, NULL, FALSE);
 		}
 
-		$query = $this->db->get('tbl_category');
+		$query = $this->db->get($this->table_name);
 		$result = $query->result_array();
 		if ($result)
 		{

@@ -2,7 +2,7 @@
 class Product_model extends CI_Model
 {
 
-	protected $table_name = 'tbl_product';
+	protected $table_name = 'shop_product';
 
 	public function __construct()
 	{
@@ -22,7 +22,7 @@ class Product_model extends CI_Model
 		$str_where_clause = "1=1";
 		if (count($array_pid) > 0)
 		{
-			$str_where_clause .= " and pro_id in (select pro_id from tbl_product_category where cat_id={$catid})";
+			$str_where_clause .= " and pro_id in (select pro_id from shop_product_category where cat_id={$catid})";
 		}
 		if ($color_id)
 		{
@@ -117,7 +117,7 @@ class Product_model extends CI_Model
 	public function get_image_url($image_id)
 	{
 		$this->db->where('image_id', $image_id);
-		$query = $this->db->get('tbl_image');
+		$query = $this->db->get('shop_image');
 		return $query->result_array();
 	}
 
@@ -125,19 +125,19 @@ class Product_model extends CI_Model
 	{
 		$this->db->where('pro_id', $pro_id);
 		$this->db->order_by("image_id", "desc");
-		$query = $this->db->get('tbl_image');
+		$query = $this->db->get('shop_image');
 		return $query->result_array();
 	}
 //COLOR
 	public function get_list_color()
 	{
-		return $this->db->get('tbl_color')->result_array();
+		return $this->db->get('shop_color')->result_array();
 	}
 
 	public function find_color_record($color_id)
 	{
 		$this->db->where('color_id', $color_id);
-		$query = $this->db->get('tbl_color');
+		$query = $this->db->get('shop_color');
 		return $query->result_array();
 	}
 }

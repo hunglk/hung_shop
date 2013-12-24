@@ -2,7 +2,7 @@
 class Groupuser_model extends CI_Model
 {
 
-	protected $table_name = 'tbl_group_user';
+	protected $table_name = 'shop_group_user';
 
 	public function __construct()
 	{

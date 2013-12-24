@@ -2,7 +2,7 @@
 class Color_model extends CI_Model
 {
 
-	protected $table_name = 'tbl_color';
+	protected $table_name = 'shop_color';
 
 	public function __construct()
 	{

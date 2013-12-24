@@ -2,7 +2,7 @@
 class User_model extends CI_Model
 {
 
-	protected $table_name = 'tbl_users';
+	protected $table_name = 'shop_user';
 
 	public function __construct()
 	{

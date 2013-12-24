@@ -2,7 +2,7 @@
 class Permision_model extends CI_Model
 {
 
-	protected $table_name = 'tbl_permision';
+	protected $table_name = 'shop_permision';
 
 	public function __construct()
 	{

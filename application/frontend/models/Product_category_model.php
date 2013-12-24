@@ -2,7 +2,7 @@
 class Product_category_model extends CI_Model
 {
 
-	protected $table_name = 'tbl_product_category';
+	protected $table_name = 'shop_product_category';
 
 	public function __construct()
 	{

@@ -2,7 +2,7 @@
 class Modules_model extends CI_Model
 {
 
-	protected $table_name = 'tbl_modules';
+	protected $table_name = 'shop_module';
 
 	public function __construct()
 	{

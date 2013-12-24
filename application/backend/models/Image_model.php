@@ -2,7 +2,7 @@
 class Image_model extends CI_Model
 {
 
-	protected $table_name = 'tbl_image';
+	protected $table_name = 'shop_image';
 
 	public function __construct()
 	{
