@@ -1,5 +1,5 @@
-
 		<div class="span9 crud">
+			<?php echo validation_errors(); ?>
 			<h1><?php echo($create ? 'New Color ' : 'Edit Color '); ?></h1>
 			<!--Form-->
 			<?php

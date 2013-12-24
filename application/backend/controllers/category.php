@@ -39,10 +39,9 @@ class Category extends MY_Controller
 		$this->template->render();
 	}
 
-	public function get_edit()
+	public function get_edit($cat_id)
 	{
 		$data['create'] = FALSE;
-		$cat_id = $this->input->get('id');
 		$data['category'] = $this->category_model->find_record($cat_id);
 		//Tree Category
 		$cats = $this->category_model->get_records('parent_id=0');
@@ -71,7 +70,7 @@ class Category extends MY_Controller
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			redirect('category/get_create');
+			$this->get_create();
 		}
 		else
 		{
@@ -86,7 +85,6 @@ class Category extends MY_Controller
 
 			redirect('category/index');
 		}
-
 	}
 
 	public function post_edit()
@@ -96,7 +94,8 @@ class Category extends MY_Controller
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			//redirect('category/get_create');
+			$cat_id = $this->input->post('id');
+			$this->get_edit($cat_id);
 		}
 		else
 		{

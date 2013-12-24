@@ -37,6 +37,7 @@ function insert_space($count)
 ?>
 
 <div class="span9 crud">
+	<?php echo validation_errors(); ?>
 	<h2><?php echo($create ? 'Add Category ' : 'Edit Category '); ?> </h2>
 	<?php
 	$attributes = array('class' => 'form-horizontal', 'id' => 'myform', 'name' => 'myform');

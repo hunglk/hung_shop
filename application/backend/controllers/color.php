@@ -22,10 +22,9 @@ class Color extends MY_Controller
 		$this->template->render();
 	}
 
-	public function get_edit()
+	public function get_edit($color_id)
 	{
 		$data['create'] = FALSE;
-		$color_id = $this->input->get('id');
 		$data['color'] = $this->color_model->find_record($color_id);
 		$this->template->parse_view('content', 'admin/color/form', $data);
 		$this->template->render();
@@ -44,7 +43,7 @@ class Color extends MY_Controller
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			redirect('color/get_create');
+			$this->get_create();
 		}
 		else
 		{
@@ -60,12 +59,12 @@ class Color extends MY_Controller
 
 	public function post_edit()
 	{
-		echo 'dkmm';exit;
 		$this->form_validation->set_rules('name', 'Name', 'required');
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			//redirect('color/get_create');
+			$color_id = $this->input->post('id');
+			$this->get_edit($color_id);
 		}
 		else
 		{

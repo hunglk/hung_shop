@@ -68,7 +68,7 @@
 											echo 'No Active';
 									?> </a>
 								<a class="btn btn-primary"
-								   href="<?php echo base_url(); ?>index.php/product/get_edit?id=<?php echo $pro['pro_id']; ?>">Sửa</a>
+								   href="<?php echo base_url(); ?>index.php/product/get_edit/<?php echo $pro['pro_id']; ?>">Sửa</a>
 								<a class="delete_toggler btn btn-danger" rel="<?php echo $pro['pro_id']; ?>">Xóa</a>
 							</td>
 						</tr>

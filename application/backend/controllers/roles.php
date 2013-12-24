@@ -27,10 +27,9 @@ class Roles extends MY_Controller
 		$this->template->render();
 	}
 
-	public function get_edit()
+	public function get_edit($pm_id)
 	{
 		$data['create'] = FALSE;
-		$pm_id = $this->input->get('id');
 		$data['role'] = $this->permision_model->find_record($pm_id);
 
 		$data['modules'] = $this->modules_model->get_list_modules();
@@ -53,8 +52,7 @@ class Roles extends MY_Controller
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->session->set_flashdata('role_create_error', 'You missed some details, please try again.');
-			//redirect('roles/get_create');
+			$this->get_create();
 		}
 		else
 		{
@@ -78,8 +76,8 @@ class Roles extends MY_Controller
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->session->set_flashdata('role_create_error', 'You missed some details, please try again.');
-			//redirect('roles/get_create');
+			$pm_id = $this->input->post('id');
+			$this->get_edit($pm_id);
 		}
 		else
 		{

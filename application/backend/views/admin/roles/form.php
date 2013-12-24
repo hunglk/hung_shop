@@ -1,5 +1,5 @@
-
 		<div class="span9 crud">
+			<?php echo validation_errors(); ?>
 			<h1><?php echo($create ? 'New Role ' : 'Edit Role '); ?></h1>
 			<!--Form-->
 			<?php
@@ -10,15 +10,6 @@
 										value="<?php echo($create ? '' : $role[0]['pm_id']); ?>"/> <? endif; ?>
 			<fieldset>
 				<legend>Phân quyền</legend>
-				<p style="color:red">
-					<?php
-					$role_create_error = $this->session->flashdata('role_create_error');
-					if ($role_create_error)
-					{
-						echo $role_create_error;
-					}
-					?>
-				</p>
 
 				<div class="control-group">
 					<label for="user_list" class="control-label">Group Users</label>

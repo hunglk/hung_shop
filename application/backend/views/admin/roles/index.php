@@ -39,7 +39,7 @@
 								echo $model->get_module_by_id($role['module_id'])[0]['name'];
 								?></td>
 							<td><a class="btn btn-primary"
-								   href="<?php echo base_url(); ?>index.php/roles/get_edit?id=<?php echo $role['pm_id']; ?>">Sửa</a>
+								   href="<?php echo base_url(); ?>index.php/roles/get_edit/<?php echo $role['pm_id']; ?>">Sửa</a>
 								<a class="delete_toggler btn btn-danger" rel="<?php echo $role['pm_id']; ?>">Xóa</a>
 							</td>
 						</tr>

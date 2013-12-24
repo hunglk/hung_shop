@@ -77,10 +77,9 @@ class Product extends MY_Controller
 		$this->template->render();
 	}
 
-	public function get_edit()
+	public function get_edit($pro_id)
 	{
 		$data['create'] = FALSE;
-		$pro_id = $this->input->get('id');
 		$data['product'] = $this->product_model->find_record($pro_id);
 		$data['colors'] = $this->color_model->get_list_color();
 		$data['parents'] = $this->category_model->get_parent();
@@ -132,12 +131,11 @@ class Product extends MY_Controller
 		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean');
 		$this->form_validation->set_rules('price', 'Price', 'required|integer|xss_clean');
 		$this->form_validation->set_rules('description', 'Description', 'required|xss_clean');
-		//$this->form_validation->set_rules('img1', 'Image', 'required');
+		//$this->form_validation->set_rules('img1', 'Image', 'required|');
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->session->set_flashdata('product_create_error', 'You missed some details, please try again.');
-			redirect('product/get_create');
+			$this->get_create();
 		}
 		else
 		{
@@ -199,61 +197,74 @@ class Product extends MY_Controller
 
 	public function post_edit()
 	{
-		$pro_id = $this->input->post('id');
-		$name = trim($this->input->post('name'));
-		$price = trim($this->input->post('price'));
-		$color_id = $this->input->post('color_id');
-		$description = trim($this->input->post('description'));
+		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean');
+		$this->form_validation->set_rules('price', 'Price', 'required|integer|xss_clean');
+		$this->form_validation->set_rules('description', 'Description', 'required|xss_clean');
+		//$this->form_validation->set_rules('img1', 'Image', 'required');
 
-		$data = array(
-			'name' => $name,
-			'price' => $price,
-			'color_id' => $color_id,
-			'description' => $description
-		);
-		$this->product_model->update_product($pro_id, $data);
-
-		//Product Category
-		$this->product_category_model->delete($pro_id);
-		foreach ($this->input->post('cat_id') as $cid)
+		if ($this->form_validation->run() == FALSE)
 		{
+			$pro_id = $this->input->post('id');
+			$this->get_edit($pro_id);
+		}
+		else
+		{
+			$pro_id = $this->input->post('id');
+			$name = trim($this->input->post('name'));
+			$price = trim($this->input->post('price'));
+			$color_id = $this->input->post('color_id');
+			$description = trim($this->input->post('description'));
+
 			$data = array(
-				'pro_id' => $pro_id,
-				'cat_id' => $cid
+				'name' => $name,
+				'price' => $price,
+				'color_id' => $color_id,
+				'description' => $description
 			);
-			$this->product_category_model->add_product_category($data);
-		}
-		//End
+			$this->product_model->update_product($pro_id, $data);
 
-		//UPLOAD
-		$path = realpath('./public/images');
-		if (!is_dir($path))
-		{
-			mkdir($path, 0755, TRUE);
-		}
-
-		$config['upload_path'] = $path;
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = '2048';
-		$config['encrypt_name'] = FALSE;
-		$this->load->library('upload', $config);
-		$this->upload->initialize($config);
-
-		for ($i = 1; $i < 4; $i++)
-		{
-			$check_upload = $this->upload->do_upload('img' . $i);
-			if ($check_upload)
+			//Product Category
+			$this->product_category_model->delete($pro_id);
+			foreach ($this->input->post('cat_id') as $cid)
 			{
 				$data = array(
 					'pro_id' => $pro_id,
-					'url' => 'public/images/' . $_FILES['img' . $i]['name']
+					'cat_id' => $cid
 				);
-				$this->image_model->add_image($data);
+				$this->product_category_model->add_product_category($data);
 			}
-		}
-		//End
+			//End
 
-		redirect('product/index');
+			//UPLOAD
+			$path = realpath('./public/images');
+			if (!is_dir($path))
+			{
+				mkdir($path, 0755, TRUE);
+			}
+
+			$config['upload_path'] = $path;
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size'] = '2048';
+			$config['encrypt_name'] = FALSE;
+			$this->load->library('upload', $config);
+			$this->upload->initialize($config);
+
+			for ($i = 1; $i < 4; $i++)
+			{
+				$check_upload = $this->upload->do_upload('img' . $i);
+				if ($check_upload)
+				{
+					$data = array(
+						'pro_id' => $pro_id,
+						'url' => 'public/images/' . $_FILES['img' . $i]['name']
+					);
+					$this->image_model->add_image($data);
+				}
+			}
+			//End
+
+			redirect('product/index');
+		}
 	}
 
 	public function update_status($pro_id, $status_id)

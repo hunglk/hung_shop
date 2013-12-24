@@ -10,15 +10,6 @@
 										value="<?php echo($create ? '' : $user[0]['user_id']); ?>"/> <? endif; ?>
 			<fieldset>
 				<legend>Thông tin cơ bản</legend>
-				<p style="color:red">
-					<?php
-					$user_create_error = $this->session->flashdata('user_create_error');
-					if ($user_create_error)
-					{
-						echo $user_create_error;
-					}
-					?>
-				</p>
 
 				<div class="control-group">
 					<label for="username" class="control-label">Username</label>

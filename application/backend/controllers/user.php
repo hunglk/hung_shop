@@ -55,10 +55,9 @@ class User extends MY_Controller
 		$this->template->render();
 	}
 
-	public function get_edit()
+	public function get_edit($user_id)
 	{
 		$data['create'] = FALSE;
-		$user_id = $this->input->get('id');
 		$data['user'] = $this->user_model->find_record($user_id);
 		$data['roles'] = $this->groupuser_model->get_list_group_user();
 
@@ -84,8 +83,7 @@ class User extends MY_Controller
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->session->set_flashdata('user_create_error', 'You missed some details, please try again.');
-			redirect('user/post_create');
+			$this->get_create();
 		}
 		else
 		{
@@ -117,8 +115,8 @@ class User extends MY_Controller
 
 			if ($this->form_validation->run() == FALSE)
 			{
-				$this->session->set_flashdata('user_create_error', 'You missed some details, please try again.');
-				//redirect('user/post_edit');
+				$user_id = $this->input->post('id');
+				$this->get_edit($user_id);
 			}
 			else
 			{

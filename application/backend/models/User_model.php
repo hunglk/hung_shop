@@ -33,7 +33,7 @@ class User_model extends CI_Model
 
 	public function add_user($data)
 	{
-		$this->db->insert($this->table_name, $data);
+		$this->db->insert($this->table_name, $this->db->escape($data));
 	}
 
 	public function find_record($user_id)
@@ -46,7 +46,7 @@ class User_model extends CI_Model
 	public function update_user($user_id, $data)
 	{
 		$this->db->where('user_id', $user_id);
-		$this->db->update($this->table_name, $data);
+		$this->db->update($this->table_name, $this->db->escape($data));
 	}
 
 	public function delete($user_id)

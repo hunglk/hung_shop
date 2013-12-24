@@ -37,9 +37,10 @@ function insert_space($count)
 ?>
 
 		<div class="span9 crud">
+			<?php echo validation_errors(); ?>
 			<h2><?php echo($create ? 'Add Product ' : 'Edit Product '); ?> </h2>
 			<?php
-			$attributes = array('class' => 'form-horizontal');
+			$attributes = array('class' => 'form-horizontal','id' => 'myform','name' => 'myform');
 			echo form_open_multipart('product/' . ($create ? 'post_create' : 'post_edit'), $attributes);
 			?>
 			<? if (!$create): ?> <input type="hidden" name="id"
@@ -86,7 +87,7 @@ function insert_space($count)
 								<label class="control-label" for="picture">Ảnh 1</label>
 
 								<div class="controls">
-									<input type="file" id="img1" name="img1"/>
+									<input type="file" id="img1" name="img1" required/>
 								</div>
 							</div>
 						</div>
@@ -121,15 +122,7 @@ function insert_space($count)
 
 			<fieldset>
 				<legend>Thông tin cơ bản</legend>
-				<p style="color:red">
-					<?php
-					$product_create_error = $this->session->flashdata('product_create_error');
-					if ($product_create_error)
-					{
-						echo $product_create_error;
-					}
-					?>
-				</p>
+
 				<?php
 				if (isset($product_category_id))
 				{
@@ -158,7 +151,7 @@ function insert_space($count)
 
 					<div class="controls">
 						<input type="text" id="name" name="name" placeholder="Nhập tên sản phẩm..."
-							   value="<?php echo($create ? '' : $product[0]['name']); ?>">
+							   value="<?php echo($create ? '' : $product[0]['name']); ?>" required>
 					</div>
 				</div>
 
@@ -167,7 +160,7 @@ function insert_space($count)
 
 					<div class="controls">
 						<input type="text" id="price" name="price" placeholder="Nhập giá sản phẩm..."
-							   value="<?php echo($create ? '' : $product[0]['price']); ?>">
+							   value="<?php echo($create ? '' : $product[0]['price']); ?>" required>
 					</div>
 				</div>
 
@@ -201,7 +194,7 @@ function insert_space($count)
 
 					<div class="controls">
 						<textarea name="description" id="description"
-								  value=""><?php echo($create ? '' : $product[0]['description']); ?></textarea>
+								  value="" required><?php echo($create ? '' : $product[0]['description']); ?></textarea>
 						<script type="text/javascript">CKEDITOR.replace('description');</script>
 					</div>
 				</div>
@@ -256,3 +249,10 @@ function insert_space($count)
 	});
 </script>
 
+<script type="text/javascript">
+	$("#myform").validate({
+		submitHandler: function(form) {
+			$(form).submit();
+		}
+	});
+</script>

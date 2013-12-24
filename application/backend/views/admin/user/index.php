@@ -64,7 +64,7 @@
 					<td><?php echo $urs['username']; ?></td>
 					<td><?php echo $urs['email']; ?></td>
 					<td><a class="btn btn-primary"
-						   href="<?php echo base_url(); ?>index.php/user/get_edit?id=<?php echo $urs['user_id']; ?>">Sửa</a>
+						   href="<?php echo base_url(); ?>index.php/user/get_edit/<?php echo $urs['user_id']; ?>">Sửa</a>
 						<a class="delete_toggler btn btn-danger" rel="<?php echo $urs['user_id']; ?>">Xóa</a>
 					</td>
 				</tr>
