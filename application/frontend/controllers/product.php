@@ -47,8 +47,8 @@ class Product extends MY_Controller
 		$amt = $this->input->post('amount');
 		$data['current_price'] = $amt;
 		$range = explode(' - ', $amt);
-		$min = ltrim($range[0],"$");
-		$max = ltrim($range[1],"$");
+		$min = ltrim($range[0],'$');
+		$max = ltrim($range[1],'$');
 		$catid = $this->input->post('catid');
 		$color_id = $this->input->post('color_id');
 		$pro_id = $this->product_category_model->get_pro_id_by_cat_id($catid);
@@ -62,10 +62,10 @@ class Product extends MY_Controller
 		$total = $this->product_model->count_records_limt($str_where_clause);
 
 		$config = array();
-		$config["base_url"] = base_url('index.php/product/filter/');
-		$config["total_rows"] = $total;
-		$config["per_page"] = per_02;
-		$config["uri_segment"] = 3;
+		$config['base_url'] = base_url('index.php/product/filter/');
+		$config['total_rows'] = $total;
+		$config['per_page'] = per_02;
+		$config['uri_segment'] = 3;
 
 		$this->pagination->initialize($config);
 		$data['pagination_home_product'] = $this->pagination->create_links();
@@ -82,7 +82,7 @@ class Product extends MY_Controller
 			$data['products'] = $products;
 		}
 
-		$this->load->view("product_ajax",$data);
+		$this->load->view('product_ajax',$data);
 	}
 
 	public function detail($proid)

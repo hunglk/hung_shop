@@ -8,7 +8,6 @@ class Product extends MY_Controller
 		$this->load->Model('permision_model');
 		$this->load->Model('product_model');
 		$this->load->Model('category_model');
-		$this->load->Model('image_model');
 		$this->load->Model('color_model');
 		$this->load->Model('product_category_model');
 	}
@@ -18,10 +17,10 @@ class Product extends MY_Controller
 		$data = array();
 
 		$config = array();
-		$config["base_url"] = base_url('index.php/product/index');
-		$config["total_rows"] = $this->product_model->count_all();
-		$config["per_page"] = 3;
-		$config["uri_segment"] = 3;
+		$config['base_url'] = base_url('index.php/product/index');
+		$config['total_rows'] = $this->product_model->count_all();
+		$config['per_page'] = per_06;
+		$config['uri_segment'] = 3;
 
 		$this->pagination->initialize($config);
 		$data['pagination_product'] = $this->pagination->create_links();
@@ -31,14 +30,14 @@ class Product extends MY_Controller
 		$products = $this->product_model->get_list_product($config['per_page'], $start);
 		foreach ($products as $key => $prod)
 		{
-			$products[$key]['prod_img'] = $this->image_model->find_record($prod['pro_id']);
+			$products[$key]['prod_img'] = $this->product_model->find_image_record($prod['pro_id']);
 			$products[$key]['prod_color'] = $this->color_model->find_record($prod['color_id']);
 		}
 		$data['products'] = $products;
 
-		if ($this->input->post("ajax"))
+		if ($this->input->post('ajax'))
 		{
-			$this->load->view("admin/product/index_ajax", $data);
+			$this->load->view('admin/product/index_ajax', $data);
 		}
 		else
 		{
@@ -84,7 +83,7 @@ class Product extends MY_Controller
 		$data['colors'] = $this->color_model->get_list_color();
 		$data['parents'] = $this->category_model->get_parent();
 		$data['product_category_id'] = $this->product_category_model->find_record($pro_id);
-		$data['images'] = $this->image_model->find_record($pro_id);
+		$data['images'] = $this->product_model->find_image_record($pro_id);
 		//Tree Category
 		$cats = $this->category_model->get_records('parent_id=0');
 		foreach ($cats as $key => $cat)
@@ -101,15 +100,15 @@ class Product extends MY_Controller
 	{
 		$pro_id = $this->input->post('id');
 		$images_pro_id = $this->product_model->find_record($pro_id)[0]['pro_id'];
-		$images = $this->image_model->find_record($images_pro_id);
+		$images = $this->product_model->find_image_record($images_pro_id);
 
 		foreach ($images as $img)
 		{
-			$paths = $this->image_model->get_image_url($img['image_id']);
+			$paths = $this->product_model->get_image_url($img['image_id']);
 			foreach ($paths as $path)
 			{
 				unlink($path['url']);
-				$this->image_model->delete($img['image_id']);
+				$this->product_model->delete_image($img['image_id']);
 			}
 		}
 		$this->product_model->delete($pro_id);
@@ -119,19 +118,18 @@ class Product extends MY_Controller
 	public function delete_image()
 	{
 		$image_id = $this->input->post('id');
-		$path = $this->image_model->get_image_url($image_id)[0]['url'];
+		$path = $this->product_model->get_image_url($image_id)[0]['url'];
 		unlink($path);
-		$this->image_model->delete($image_id);
+		$this->product_model->delete_image($image_id);
 
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function post_create()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean');
-		$this->form_validation->set_rules('price', 'Price', 'required|integer|xss_clean');
+		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean|is_unique[shop_product.name]|alpha_dash');
+		$this->form_validation->set_rules('price', 'Price', 'required|(decimal||integer)|xss_clean');
 		$this->form_validation->set_rules('description', 'Description', 'required|xss_clean');
-		//$this->form_validation->set_rules('img1', 'Image', 'required|');
 
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -187,7 +185,7 @@ class Product extends MY_Controller
 						'pro_id' => $pro_id,
 						'url' => 'public/images/' . $_FILES['img' . $i]['name']
 					);
-					$this->image_model->add_image($data);
+					$this->product_model->add_image($data);
 				}
 			}
 			//End
@@ -197,10 +195,9 @@ class Product extends MY_Controller
 
 	public function post_edit()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean');
-		$this->form_validation->set_rules('price', 'Price', 'required|integer|xss_clean');
+		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean|alpha_dash');
+		$this->form_validation->set_rules('price', 'Price', 'required|(decimal||integer)|xss_clean');
 		$this->form_validation->set_rules('description', 'Description', 'required|xss_clean');
-		//$this->form_validation->set_rules('img1', 'Image', 'required');
 
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -258,7 +255,7 @@ class Product extends MY_Controller
 						'pro_id' => $pro_id,
 						'url' => 'public/images/' . $_FILES['img' . $i]['name']
 					);
-					$this->image_model->add_image($data);
+					$this->product_model->add_image($data);
 				}
 			}
 			//End

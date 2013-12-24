@@ -8,7 +8,7 @@ class Category extends MY_Controller
 		$this->load->Model('permision_model');
 		$this->load->Model('category_model');
 	}
-
+//CATEGORY
 	public function index()
 	{
 		//Tree Category
@@ -55,17 +55,9 @@ class Category extends MY_Controller
 		$this->template->render();
 	}
 
-	public function delete()
-	{
-		$cat_id = $this->input->post('id');
-		$this->category_model->delete($cat_id);
-
-		redirect('category/index');
-	}
-
 	public function post_create()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean');
+		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean|alpha_dash');
 		$this->form_validation->set_rules('parent_id', 'Parent_id', 'required|xss_clean');
 
 		if ($this->form_validation->run() == FALSE)
@@ -89,7 +81,7 @@ class Category extends MY_Controller
 
 	public function post_edit()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean');
+		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean|alpha_dash');
 		$this->form_validation->set_rules('parent_id', 'Parent_id', 'required|xss_clean');
 
 		if ($this->form_validation->run() == FALSE)
@@ -111,6 +103,41 @@ class Category extends MY_Controller
 
 			redirect('category/index');
 		}
+	}
+
+	public function delete()
+	{
+		$cat_id = $this->input->post('id');
+		$this->category_model->delete($cat_id);
+
+		$pro_id = $this->get_pro_id_by_cat_id($cat_id);
+		foreach ($pro_id as $pid)
+		{
+			$this->delete_product($pid['pro_id']);
+		}
+		$this->delete_product_category($cat_id);
+
+		redirect('category/index');
+	}
+//CATEGORY PRODUCT
+	public function delete_product_category($cat_id)
+	{
+		$this->db->where('cat_id', $cat_id);
+		$this->db->delete('shop_product_category');
+	}
+
+	public function get_pro_id_by_cat_id($cat_id)
+	{
+		$this->db->where('cat_id', $cat_id);
+		$this->db->order_by('pro_cat_id', 'desc');
+		$query = $this->db->get('shop_product_category');
+		return $query->result_array();
+	}
+//PRODUCT
+	public function delete_product($array_pid)
+	{
+		$this->db->where('pro_id', $array_pid);
+		$this->db->delete('shop_product');
 	}
 
 }

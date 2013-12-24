@@ -69,7 +69,7 @@ class Product_model extends CI_Model
 	public function get_list_product($offset, $start)
 	{
 		$this->db->limit($offset, $start);
-		$this->db->order_by("pro_id", "desc");
+		$this->db->order_by('pro_id', 'desc');
 		return $this->db->get($this->table_name)->result_array();
 	}
 
@@ -110,7 +110,7 @@ class Product_model extends CI_Model
 		$this->db->select();
 		$this->db->like('name', $keyword);
 		$this->db->limit($offset, $start);
-		$this->db->order_by("pro_id", "desc");
+		$this->db->order_by('pro_id', 'desc');
 		return $this->db->get($this->table_name)->result_array();
 	}
 //IMAGE
@@ -124,7 +124,7 @@ class Product_model extends CI_Model
 	public function find_image_record($pro_id)
 	{
 		$this->db->where('pro_id', $pro_id);
-		$this->db->order_by("image_id", "desc");
+		$this->db->order_by('image_id', 'desc');
 		$query = $this->db->get('shop_image');
 		return $query->result_array();
 	}

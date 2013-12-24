@@ -75,10 +75,10 @@ class User extends MY_Controller
 
 	public function post_create()
 	{
-		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
-		$this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email');
-		$this->form_validation->set_rules('password', 'Password', 'required|trim|matches[password_confirm]');
-		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim');
+		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean|alpha_dash');
+		$this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email|is_unique[shop_user.email]');
+		$this->form_validation->set_rules('password', 'Password', 'required|trim|matches[password_confirm]|alpha_dash');
+		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|alpha_dash');
 		$this->form_validation->set_rules('role_id', 'Roles', 'required');
 
 		if ($this->form_validation->run() == FALSE)
@@ -107,10 +107,10 @@ class User extends MY_Controller
 
 	public function post_edit()
 	{
-			$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean|alpha_dash');
 			$this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email');
-			$this->form_validation->set_rules('password', 'Password', 'required|trim|matches[password_confirm]');
-			$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim');
+			$this->form_validation->set_rules('password', 'Password', 'required|trim|matches[password_confirm]|alpha_dash');
+			$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|alpha_dash');
 			$this->form_validation->set_rules('role_id', 'Roles', 'required');
 
 			if ($this->form_validation->run() == FALSE)

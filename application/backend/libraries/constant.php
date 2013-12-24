@@ -4,9 +4,10 @@ class Constant {
 
 	public function __construct()
 	{
-		define('per_2', 2);
-		define('per_3', 3);
-		define('per_4', 4);
+		define('per_02', 2);
+		define('per_03', 3);
+		define('per_04', 4);
+		define('per_06', 6);
 	}
 
 }

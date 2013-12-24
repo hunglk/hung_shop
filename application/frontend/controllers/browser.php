@@ -7,7 +7,6 @@ class Browser extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->Model('product_model');
-		//$this->load->Model('image_model');
 		$this->load->Model('product_category_model');
 	}
 

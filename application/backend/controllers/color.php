@@ -39,7 +39,7 @@ class Color extends MY_Controller
 
 	public function post_create()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean|alpha_dash');
 
 		if ($this->form_validation->run() == FALSE)
 		{
@@ -59,7 +59,7 @@ class Color extends MY_Controller
 
 	public function post_edit()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required');
+		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean|alpha_dash');
 
 		if ($this->form_validation->run() == FALSE)
 		{

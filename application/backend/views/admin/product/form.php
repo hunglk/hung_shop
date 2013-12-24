@@ -87,7 +87,7 @@ function insert_space($count)
 								<label class="control-label" for="picture">Ảnh 1</label>
 
 								<div class="controls">
-									<input type="file" id="img1" name="img1" required/>
+									<input type="file" id="img1" name="img1"/>
 								</div>
 							</div>
 						</div>
@@ -168,7 +168,8 @@ function insert_space($count)
 					<label class="control-label" for="price">Chọn màu</label>
 
 					<div class="controls">
-						<select id="color_id" name="color_id">
+						<select id="color_id" name="color_id" required>
+							<option value="">Chọn màu</option>
 							<?php
 							foreach ($colors as $color)
 							{

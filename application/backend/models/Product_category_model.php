@@ -12,7 +12,7 @@ class Product_category_model extends CI_Model
 	public function find_record($pro_id)
 	{
 		$this->db->where('pro_id', $pro_id);
-		$this->db->order_by("pro_cat_id", "desc");
+		$this->db->order_by('pro_cat_id', 'desc');
 		$query = $this->db->get($this->table_name);
 		return $query->result_array();
 	}

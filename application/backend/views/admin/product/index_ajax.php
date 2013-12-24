@@ -83,3 +83,35 @@ if ($products)
 	Phân Trang
 	<?php echo $pagination_product; ?>
 </div>
+
+<div class="modal hide fade" id="delete_user">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+
+		<h3>Are You Sure?</h3>
+	</div>
+	<div class="modal-body">
+		<p>Are you sure you want to delete this user?</p>
+	</div>
+	<div class="modal-footer">
+		<?php echo form_open('product/delete'); ?>
+		<a data-toggle="modal" href="#delete_user" class="btn">Keep</a>
+		<input type="hidden" name="id" id="postvalue" value=""/>
+		<input type="submit" class="btn btn-danger" value="Delete"/>
+		<?php echo form_close(); ?>
+	</div>
+</div>
+
+<script>
+	$('#delete_user').modal({
+		show: false
+	}); // Start the modal
+
+	// Populate the field with the right data for the modal when clicked
+	$('.delete_toggler').each(function (index, elem) {
+		$(elem).click(function () {
+			$('#postvalue').attr('value', $(elem).attr('rel'));
+			$('#delete_user').modal('show');
+		});
+	});
+</script>
