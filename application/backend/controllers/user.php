@@ -13,7 +13,7 @@ class User extends MY_Controller
 	public function index()
 	{
 		$data = array();
-//dsd
+
 		$config = array();
 		$config["base_url"] = base_url('index.php/user/index');
 		$config["total_rows"] = $this->user_model->count_all();
