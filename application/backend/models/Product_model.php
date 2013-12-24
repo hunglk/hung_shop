@@ -12,7 +12,7 @@ class Product_model extends CI_Model
 	public function get_list_product($offset, $start)
 	{
 		$this->db->limit($offset, $start);
-		$this->db->order_by("pro_id", "desc");
+		$this->db->order_by('pro_id', 'desc');
 		return $this->db->get($this->table_name)->result_array();
 	}
 
@@ -30,14 +30,14 @@ class Product_model extends CI_Model
 
 	public function add_product($data)
 	{
-		$this->db->insert($this->table_name, $data);
+		$this->db->insert($this->table_name, $this->db->escape($data));
 		return $this->db->insert_id();
 	}
 
 	public function update_product($pro_id, $data)
 	{
 		$this->db->where('pro_id', $pro_id);
-		$this->db->update($this->table_name, $data);
+		$this->db->update($this->table_name, $this->db->escape($data));
 	}
 
 	public function delete($pro_id)
@@ -63,7 +63,7 @@ class Product_model extends CI_Model
 
 	public function add_image($data)
 	{
-		$this->db->insert('shop_image', $data);
+		$this->db->insert('shop_image', $this->db->escape($data));
 	}
 
 	public function delete_image($image_id)

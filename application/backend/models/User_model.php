@@ -15,7 +15,7 @@ class User_model extends CI_Model
 		$this->db->like('username', $keyword);
 		$this->db->or_like('email', $keyword);
 		$this->db->limit($offset, $start);
-		$this->db->order_by('user_id', 'desc');
+		$this->db->order_by("user_id", "desc");
 		return $this->db->get($this->table_name)->result_array();
 	}
 
@@ -33,7 +33,7 @@ class User_model extends CI_Model
 
 	public function add_user($data)
 	{
-		$this->db->insert($this->table_name, $data);
+		$this->db->insert($this->table_name, $this->db->escape($data));
 	}
 
 	public function find_record($user_id)

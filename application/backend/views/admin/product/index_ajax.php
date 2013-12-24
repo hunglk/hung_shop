@@ -50,7 +50,7 @@ if ($products)
 		?>
 		<tr>
 			<td><?php echo $pro['pro_id']; ?></td>
-			<td><?php echo $pro['name']; ?></td>
+			<td><?php echo htmlspecialchars($pro['name']); ?></td>
 			<td><?php echo $pro['price']; ?></td>
 			<td><a href="#"><img src="<?php echo base_url() . $pro['prod_img'][0]['url']; ?>" width="70px" height="70px"
 								 alt=""></a></td>

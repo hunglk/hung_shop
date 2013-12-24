@@ -30,14 +30,8 @@
 						?>
 						<tr>
 							<td><?php echo $role['pm_id']; ?></td>
-							<td><?php
-								$model = new Groupuser_model();
-								echo $model->get_groupuser_by_id($role['id_group_user'])[0]['name'];
-								?></td>
-							<td><?php
-								$model = new Modules_model();
-								echo $model->get_module_by_id($role['module_id'])[0]['name'];
-								?></td>
+							<td><?php echo $role['group_user'][0]['name']; ?></td>
+							<td><?php echo $role['module'][0]['name']; ?></td>
 							<td><a class="btn btn-primary"
 								   href="<?php echo base_url(); ?>index.php/roles/get_edit/<?php echo $role['pm_id']; ?>">Sửa</a>
 								<a class="delete_toggler btn btn-danger" rel="<?php echo $role['pm_id']; ?>">Xóa</a>

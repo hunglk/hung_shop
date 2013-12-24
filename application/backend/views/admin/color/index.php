@@ -28,7 +28,7 @@
 						?>
 						<tr>
 							<td><?php echo $color['color_id']; ?></td>
-							<td><?php echo $color['name']; ?></td>
+							<td><?php echo htmlspecialchars($color['name']); ?></td>
 							<td><a class="btn btn-primary"
 								   href="<?php echo base_url(); ?>index.php/color/get_edit/<?php echo $color['color_id']; ?>">Sửa</a>
 								<a class="delete_toggler btn btn-danger" rel="<?php echo $color['color_id']; ?>">Xóa</a>

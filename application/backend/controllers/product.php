@@ -127,7 +127,7 @@ class Product extends MY_Controller
 
 	public function post_create()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean|is_unique[shop_product.name]|alpha_dash');
+		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean|is_unique[shop_product.name]');
 		$this->form_validation->set_rules('price', 'Price', 'required|(decimal||integer)|xss_clean');
 		$this->form_validation->set_rules('description', 'Description', 'required|xss_clean');
 
@@ -195,7 +195,7 @@ class Product extends MY_Controller
 
 	public function post_edit()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean|alpha_dash');
+		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean');
 		$this->form_validation->set_rules('price', 'Price', 'required|(decimal||integer)|xss_clean');
 		$this->form_validation->set_rules('description', 'Description', 'required|xss_clean');
 

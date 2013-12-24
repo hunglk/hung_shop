@@ -57,7 +57,7 @@ class Category extends MY_Controller
 
 	public function post_create()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean|alpha_dash');
+		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('parent_id', 'Parent_id', 'required|xss_clean');
 
 		if ($this->form_validation->run() == FALSE)
@@ -81,7 +81,7 @@ class Category extends MY_Controller
 
 	public function post_edit()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean|alpha_dash');
+		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('parent_id', 'Parent_id', 'required|xss_clean');
 
 		if ($this->form_validation->run() == FALSE)

@@ -71,13 +71,13 @@ class Category_model extends CI_Model
 
 	public function add_category($data)
 	{
-		$this->db->insert($this->table_name, $data);
+		$this->db->insert($this->table_name, $this->db->escape($data));
 	}
 
 	public function update_category($cat_id, $data)
 	{
 		$this->db->where('cat_id', $cat_id);
-		$this->db->update($this->table_name, $data);
+		$this->db->update($this->table_name, $this->db->escape($data));
 	}
 
 	public function delete($cat_id)

@@ -23,13 +23,13 @@ class Color_model extends CI_Model
 
 	public function add_color($data)
 	{
-		$this->db->insert($this->table_name, $data);
+		$this->db->insert($this->table_name, $this->db->escape($data));
 	}
 
 	public function update_color($color_id, $data)
 	{
 		$this->db->where('color_id', $color_id);
-		$this->db->update($this->table_name, $data);
+		$this->db->update($this->table_name, $this->db->escape($data));
 	}
 
 	public function delete($color_id)

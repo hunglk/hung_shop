@@ -6,13 +6,17 @@ class Roles extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->Model('permision_model');
-		$this->load->Model('modules_model');
-		$this->load->Model('groupuser_model');
 	}
 
 	public function index()
 	{
-		$data['roles'] = $this->permision_model->get_list_permision();
+		$roles = $this->permision_model->get_list_permision();
+		foreach ($roles as $key => $role)
+		{
+			$roles[$key]['group_user'] = $this->permision_model->get_groupuser_by_id($role['id_group_user']);
+			$roles[$key]['module'] = $this->permision_model->get_module_by_id($role['module_id']);
+		}
+		$data['roles'] = $roles;
 		$this->template->parse_view('content', 'admin/roles/index', $data);
 		$this->template->render();
 	}
@@ -20,8 +24,8 @@ class Roles extends MY_Controller
 	public function get_create()
 	{
 		$data['create'] = TRUE;
-		$data['modules'] = $this->modules_model->get_list_modules();
-		$data['groupusers'] = $this->groupuser_model->get_list_group_user();
+		$data['modules'] = $this->permision_model->get_list_modules();
+		$data['groupusers'] = $this->permision_model->get_list_group_user();
 
 		$this->template->parse_view('content', 'admin/roles/form', $data);
 		$this->template->render();
@@ -32,8 +36,8 @@ class Roles extends MY_Controller
 		$data['create'] = FALSE;
 		$data['role'] = $this->permision_model->find_record($pm_id);
 
-		$data['modules'] = $this->modules_model->get_list_modules();
-		$data['groupusers'] = $this->groupuser_model->get_list_group_user();
+		$data['modules'] = $this->permision_model->get_list_modules();
+		$data['groupusers'] = $this->permision_model->get_list_group_user();
 		$this->template->parse_view('content', 'admin/roles/form', $data);
 		$this->template->render();
 	}

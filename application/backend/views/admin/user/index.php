@@ -61,8 +61,8 @@
 				?>
 				<tr>
 					<td><?php echo $urs['user_id']; ?></td>
-					<td><?php echo $urs['username']; ?></td>
-					<td><?php echo $urs['email']; ?></td>
+					<td><?php echo htmlspecialchars($urs['username']); ?></td>
+					<td><?php echo htmlspecialchars($urs['email']); ?></td>
 					<td><a class="btn btn-primary"
 						   href="<?php echo base_url(); ?>index.php/user/get_edit/<?php echo $urs['user_id']; ?>">Sửa</a>
 						<a class="delete_toggler btn btn-danger" rel="<?php echo $urs['user_id']; ?>">Xóa</a>
