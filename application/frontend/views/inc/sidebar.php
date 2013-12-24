@@ -98,11 +98,7 @@ function insert_space($count)
 <div id="sidebar">
 	<!-- Search -->
 	<div class="box search">
-		<h2>Search by <span></span></h2>
 		<div class="box-content">
-				<label>Keyword</label>
-				<input type="text" name="keyword" id="keyword" />
-				<input type="submit" class="search-submit" name="submit" value="Search" />
 
 			<h2>Filter by <span></span></h2>
 			<p><label for="amount">Price range:</label>

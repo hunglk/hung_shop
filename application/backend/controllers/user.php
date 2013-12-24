@@ -17,7 +17,7 @@ class User extends MY_Controller
 		$config = array();
 		$config["base_url"] = base_url('index.php/user/index');
 		$config["total_rows"] = $this->user_model->count_all();
-		$config["per_page"] = per_4;
+		$config["per_page"] = per_06;
 		$config["uri_segment"] = 3;
 
 		$this->pagination->initialize($config);
