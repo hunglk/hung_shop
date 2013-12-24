@@ -40,7 +40,7 @@ class Permision_model extends CI_Model
 
 	public function get_permison()
 	{
-		$this->load->Model("modules_model");
+		$this->load->Model('modules_model');
 		$module_id = $this->modules_model->get_module()[0]['module_id'];
 		$group_user_id = $this->session->userdata('group_user_id');
 

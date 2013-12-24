@@ -5,7 +5,7 @@ class Admin extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->Model("admin_model");
+		$this->load->Model('admin_model');
 	}
 
 	public function index()
@@ -16,7 +16,7 @@ class Admin extends CI_Controller
 
 		if ($this->form_validation->run() === FALSE)
 		{
-			$this->load->view("admin/login", $data);
+			$this->load->view('admin/login', $data);
 		}
 		else
 		{
