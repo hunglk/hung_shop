@@ -59,7 +59,7 @@
 							<td><a href="#"><img src="<?php echo base_url() . $pro['prod_img'][0]['url']; ?>"
 												 width="70px" height="70px" alt=""></a></td>
 							<td><?php echo $pro['prod_color'][0]['name']; ?> </td>
-							<td><?php echo $pro['description']; ?></td>
+							<td><?php echo substr($pro['description'], 0, 20); ?></td>
 							<td><a class="btn btn-primary"
 								   href="<?php echo base_url(); ?>index.php/product/update_status/<?php echo $pro['pro_id']. "/". $pro['status']?>" >
 									<?php if ($pro['status'] == 1)
