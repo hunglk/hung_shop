@@ -33,7 +33,7 @@
 <div class="products">
 	<div id="prod_content">
 		<div id="jquery_home_product">
-			Phân Trang  <?php echo $pagination_home_product;?>
+			Phan Trang  <?php echo $pagination_home_product;?>
 		</div>
 		<div class="cl">&nbsp;</div>
 		<ul>

@@ -1,17 +1,17 @@
 <div id="header">
 
-	<h1 id="logo"><a href="#">shoparound</a></h1>
+	<h1 id="logo"><a href="<?php echo base_url(); ?>product">shoparound</a></h1>
 	<!-- Cart -->
 	<div id="cart"><a href="#" class="cart-link">Your Shopping Cart</a>
 
 		<div class="cl">&nbsp;</div>
-		<span>Articles: <strong>4</strong></span> &nbsp;&nbsp; <span>Cost: <strong>$250.99</strong></span></div>
+		<span>Articles: </span> &nbsp;&nbsp; <span>Cost: </span></div>
 	<!-- End Cart -->
 	<!-- Navigation -->
 	<div id="navigation">
 		<ul id="main-menu">
 			<li><a href="<?php echo base_url(); ?>">Home</a></li>
-			<li><a href="<?php echo base_url(); ?>product" class="active">Product</a></li>
+			<li><a href="<?php echo base_url(); ?>product" class="">Product</a></li>
 			<li><a href="#">Support</a></li>
 			<li><a href="#">My Account</a></li>
 			<li><a href="#">The Store</a></li>
