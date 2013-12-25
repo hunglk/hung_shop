@@ -2,7 +2,7 @@ $(document).ready(function () {
     filter_product();
     slider_product();
     category_tree_view();
-    pagination();
+    pagination_product();
 });
 
 function filter_product() {
@@ -64,7 +64,7 @@ function category_tree_view() {
     });
 }
 
-function pagination() {
+function pagination_product() {
     $("#content").on("click", "#jquery_home_product a", function(){
         var url = $(this).attr("href");
         $.ajax({
