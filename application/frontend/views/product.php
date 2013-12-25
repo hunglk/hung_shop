@@ -1,27 +1,4 @@
 <!-- Phan Trang -->
-<script>
-	$(document).ready(function(){
-		$("#content").on("click", "#jquery_home_product a", function(){
-			var url = $(this).attr("href");
-			$.ajax({
-				type: "POST",
-				url: url,
-				data: {
-					"ajax" : 1,
-					"amount" : $('#hiddent_current_price').val()
-				},
-				beforeSend: function(){
-					$("#prod_content").html("");
-				},
-				success: function(kq){
-					$("#prod_content").html(kq);
-				}
-			})
-			return false;
-		});
-	});
-
-</script>
 
 <style>
 	#jquery_home_product{
