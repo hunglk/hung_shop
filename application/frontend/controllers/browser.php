@@ -26,7 +26,7 @@ class Browser extends MY_Controller
 		$config = array();
 		$config['base_url'] = base_url('index.php/browser/index/' . $catid);
 		$config['total_rows'] = count($array_pid);
-		$config['per_page'] = per_03;
+		$config['per_page'] = per_02;
 		$config['uri_segment'] = 4;
 
 		$this->pagination->initialize($config);

@@ -9,7 +9,7 @@
 	<!-- End Cart -->
 	<!-- Navigation -->
 	<div id="navigation">
-		<ul>
+		<ul id="main-menu">
 			<li><a href="<?php echo base_url(); ?>">Home</a></li>
 			<li><a href="<?php echo base_url(); ?>product" class="active">Product</a></li>
 			<li><a href="#">Support</a></li>
