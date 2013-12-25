@@ -19,3 +19,6 @@
 	</div>
 	<!-- End Navigation -->
 </div>
+<div id="main">
+
+</div>
