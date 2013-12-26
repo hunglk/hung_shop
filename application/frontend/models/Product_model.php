@@ -10,10 +10,10 @@ class Product_model extends CI_Model
 
 	}
 //PRODUCT
-	public function get_top4()
+	public function get_top5()
 	{
-		$this->db->where('status', '1');
-		$this->db->limit(4);
+		$this->db->order_by('selected_id', 'desc');
+		$this->db->limit(5);
 		return $this->db->get($this->table_name)->result_array();
 	}
 

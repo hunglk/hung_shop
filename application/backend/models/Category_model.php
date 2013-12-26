@@ -69,6 +69,13 @@ class Category_model extends CI_Model
 		return $query->result_array();
 	}
 
+	public function find_record_by_parent_id($parent_id)
+	{
+		$this->db->where('parent_id', $parent_id);
+		$query = $this->db->get($this->table_name);
+		return $query->result_array();
+	}
+
 	public function add_category($data)
 	{
 		$this->db->insert($this->table_name, $this->db->escape($data));
@@ -80,8 +87,30 @@ class Category_model extends CI_Model
 		$this->db->update($this->table_name, $this->db->escape($data));
 	}
 
+	public function update_array_category($array_pid, $data)
+	{
+		$this->db->where_in('cat_id', $array_pid);
+		$this->db->update($this->table_name, $this->db->escape($data));
+	}
+
 	public function delete($cat_id)
 	{
+		//update
+		$record = $this->find_record($cat_id);
+		$parent_id = $record[0]['parent_id'];
+
+		$record_by_parent_id = $this->find_record_by_parent_id($cat_id);
+		$array_pid = array();
+		foreach ($record_by_parent_id as $pid)
+		{
+			$array_pid[] = $pid['cat_id'];
+		}
+
+		$data = array(
+			'parent_id' => $parent_id
+		);
+		$this->update_array_category($array_pid, $data);
+		//delete
 		$this->db->where('cat_id', $cat_id);
 		$this->db->delete($this->table_name);
 	}

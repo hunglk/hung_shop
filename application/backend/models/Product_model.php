@@ -45,6 +45,15 @@ class Product_model extends CI_Model
 		$this->db->where('pro_id', $pro_id);
 		$this->db->delete($this->table_name);
 	}
+
+	public function update_selected($selected_id)
+	{
+		$data = array(
+			'selected_id' => '0'
+		);
+		$this->db->where('selected_id', $selected_id);
+		$this->db->update($this->table_name, $this->db->escape($data));
+	}
 //IMAGE
 	public function get_image_url($image_id)
 	{

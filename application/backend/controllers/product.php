@@ -124,7 +124,7 @@ class Product extends MY_Controller
 		unlink($path);
 		$this->product_model->delete_image($image_id);
 
-		redirect($_SERVER['HTTP_REFERER']);
+		redirect($this->input->post('redirect'));
 	}
 
 	public function save()
@@ -152,12 +152,18 @@ class Product extends MY_Controller
 			$price = trim($this->input->post('price'));
 			$color_id = $this->input->post('color_id');
 			$description = trim($this->input->post('description'));
+			if ($this->input->post('selected_id'))
+			{
+				$this->product_model->update_selected($this->input->post('selected_id'));
+			}
+			$selected_id = (int) $this->input->post('selected_id');
 
 			$data = array(
 				'name' => $name,
 				'price' => $price,
 				'color_id' => $color_id,
-				'description' => $description
+				'description' => $description,
+				'selected_id' => $selected_id
 			);
 
 			if ($this->input->post('id'))
@@ -218,21 +224,4 @@ class Product extends MY_Controller
 		}
 	}
 
-	public function update_status($pro_id, $status_id)
-	{
-		if ($status_id == 0)
-		{
-			$status = '1';
-		}
-		else
-		{
-			$status = '0';
-		}
-		$data = array(
-			'status' => $status
-		);
-
-		$this->product_model->update_product($pro_id, $data);
-		redirect('product/index');
-	}
 }

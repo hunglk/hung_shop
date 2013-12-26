@@ -23,6 +23,7 @@
 						<th>Image</th>
 						<th>Color</th>
 						<th>Description</th>
+						<th> Position</th>
 						<th>Action</th>
 					</tr>
 					</thead>
@@ -39,14 +40,8 @@
 												 width="70px" height="70px" alt=""></a></td>
 							<td><?php echo $pro['prod_color'][0]['name']; ?> </td>
 							<td><?php echo substr($pro['description'], 0, 20); ?></td>
+							<td><?php if ($pro['selected_id'] != 0) echo $pro['selected_id']; ?></td>
 							<td><a class="btn btn-primary"
-								   href="<?php echo base_url(); ?>index.php/product/update_status/<?php echo $pro['pro_id']. "/". $pro['status']?>" >
-									<?php if ($pro['status'] == 1)
-											echo('Active');
-										else
-											echo 'No Active';
-									?> </a>
-								<a class="btn btn-primary"
 								   href="<?php echo base_url(); ?>index.php/product/edit/<?php echo $pro['pro_id']; ?>">Sửa</a>
 								<a class="delete_toggler btn btn-danger" rel="<?php echo $pro['pro_id']; ?>">Xóa</a>
 							</td>

@@ -27,7 +27,7 @@ class My_Controller extends CI_Controller
 		$data['cats'] = $cats;
 		$data['colors'] = $this->product_model->get_list_color();
 
-		$products = $this->product_model->get_top4();
+		$products = $this->product_model->get_top5();
 		if (!empty($products))
 		{
 			foreach ($products as $key => $prod)

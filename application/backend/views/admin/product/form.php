@@ -43,8 +43,11 @@ function insert_space($count)
 			$attributes = array('class' => 'form-horizontal','id' => 'myform','name' => 'myform');
 			echo form_open_multipart('product/save', $attributes);
 			?>
-			<? if (!$create): ?> <input type="hidden" name="id"
-										value="<?php echo($create ? '' : $product[0]['pro_id']); ?>"/> <? endif; ?>
+			<? if (!$create): ?>
+				<input type="hidden" name="id" value="<?php echo($create ? '' : $product[0]['pro_id']); ?>"/>
+				<input type="hidden" name="selected_id" value="<?php echo($create ? '' : $product[0]['selected_id']); ?>"/>
+				<input name="redirect" type="hidden" value="<?php $this->uri->uri_string(); ?>" />
+			<? endif; ?>
 			<!--Upload -->
 			<?php
 			if (isset($images))
@@ -191,6 +194,29 @@ function insert_space($count)
 				</div>
 
 				<div class="control-group">
+					<label class="control-label" for="price">Chọn slider</label>
+
+					<div class="controls">
+						<select id="selected_id" name="selected_id" required>
+							<option value="0">Chọn vị trí</option>
+							<?php
+							for ($i = 1; $i < 6; $i++)
+							{
+							?>
+							<option value="<?php echo $i;?>"
+								<?php
+								if (($create ? '' : $product[0]['selected_id'] == $i))
+								{
+									echo 'selected';
+								}
+								?>
+							>Vị trí thứ <?php echo $i;?></option>;
+							<?php }?>
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group">
 					<label class="control-label" for="description">Mô tả chi tiết</label>
 
 					<div class="controls">
@@ -223,6 +249,7 @@ function insert_space($count)
 		<?php echo form_open('product/delete_image'); ?>
 		<a data-toggle="modal" href="#delete_user" class="btn">Keep</a>
 		<input type="hidden" name="id" id="postvalue" value=""/>
+		<input type="hidden" name="redirect" value="<?php echo current_url(); ?>" />
 		<input type="submit" class="btn btn-danger" value="Delete"/>
 		<?php echo form_close(); ?>
 	</div>
