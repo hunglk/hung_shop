@@ -5,7 +5,7 @@ class Admin extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->Model('admin_model');
+		$this->load->Model('user_model');
 	}
 
 	public function index()
@@ -23,9 +23,9 @@ class Admin extends CI_Controller
 			$username = trim($this->input->post('username'));
 			$password = trim($this->input->post('password'));
 
-			if ($this->admin_model->check_login($username, $password))
+			if ($this->user_model->check_login($username, $password))
 			{
-				$check = $this->admin_model->check_login($username, $password);
+				$check = $this->user_model->check_login($username, $password);
 				$user_id = $check[0]['user_id'];
 				$group_user_id = $check[0]['group_user_id'];
 				$session_data = array(

@@ -13,7 +13,7 @@ class Roles extends MY_Controller
 		$roles = $this->permision_model->get_list_permision();
 		foreach ($roles as $key => $role)
 		{
-			$roles[$key]['group_user'] = $this->permision_model->get_groupuser_by_id($role['id_group_user']);
+			$roles[$key]['group_user'] = $this->permision_model->get_groupuser_by_id($role['group_user_id']);
 			$roles[$key]['module'] = $this->permision_model->get_module_by_id($role['module_id']);
 		}
 		$data['roles'] = $roles;
@@ -21,7 +21,7 @@ class Roles extends MY_Controller
 		$this->template->render();
 	}
 
-	public function get_create()
+	public function create()
 	{
 		$data['create'] = TRUE;
 		$data['modules'] = $this->permision_model->get_list_modules();
@@ -31,7 +31,7 @@ class Roles extends MY_Controller
 		$this->template->render();
 	}
 
-	public function get_edit($pm_id)
+	public function edit($pm_id)
 	{
 		$data['create'] = FALSE;
 		$data['role'] = $this->permision_model->find_record($pm_id);
@@ -44,57 +44,48 @@ class Roles extends MY_Controller
 
 	public function delete()
 	{
-		$pm_id = $this->input->post('id');
+		$pm_id = (int) $this->input->post('id');
 		$this->permision_model->delete($pm_id);
 		redirect('roles/index');
 	}
 
-	public function post_create()
+	public function save()
 	{
 		$this->form_validation->set_rules('group_user_id', 'Roles', 'required');
 		$this->form_validation->set_rules('module_id', 'Modules', 'required');
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->get_create();
+			if ($this->input->post('id'))
+			{
+				$pm_id = (int) $this->input->post('id');
+				$this->edit($pm_id);
+			}
+			else
+			{
+				$this->create();
+			}
 		}
 		else
 		{
-			$group_user_id = $this->input->post('group_user_id');
-			$module_id = $this->input->post('module_id');
+			$group_user_id = (int) $this->input->post('group_user_id');
+			$module_id = (int) $this->input->post('module_id');
 
 			$data = array(
-				'id_group_user' => $group_user_id,
+				'group_user_id' => $group_user_id,
 				'module_id' => $module_id
 			);
-
-			$this->permision_model->add_permision($data);
+			if ($this->input->post('id'))
+			{
+				$pm_id = (int) $this->input->post('id');
+				$this->permision_model->update_permision($pm_id, $data);
+			}
+			else
+			{
+				$this->permision_model->add_permision($data);
+			}
 			redirect('roles/index');
 		}
 	}
 
-	public function post_edit()
-	{
-		$this->form_validation->set_rules('group_user_id', 'Roles', 'required');
-		$this->form_validation->set_rules('module_id', 'Modules', 'required');
-
-		if ($this->form_validation->run() == FALSE)
-		{
-			$pm_id = $this->input->post('id');
-			$this->get_edit($pm_id);
-		}
-		else
-		{
-			$pm_id = $this->input->post('id');
-			$group_user_id = $this->input->post('group_user_id');
-			$module_id = $this->input->post('module_id');
-
-			$data = array(
-				'id_group_user' => $group_user_id,
-				'module_id' => $module_id
-			);
-			$this->permision_model->update_permision($pm_id, $data);
-			redirect('roles/index');
-		}
-	}
 }

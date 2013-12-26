@@ -25,7 +25,7 @@ class Product extends MY_Controller
 		$this->pagination->initialize($config);
 		$data['pagination_product'] = $this->pagination->create_links();
 
-		$start = $this->uri->segment(3);
+		$start = (int) $this->uri->segment(3);
 
 		$products = $this->product_model->get_list_product($config['per_page'], $start);
 		foreach ($products as $key => $prod)
@@ -59,7 +59,7 @@ class Product extends MY_Controller
 		return $child_cats;
 	}
 
-	public function get_create()
+	public function create()
 	{
 		$data['create'] = TRUE;
 		$data['parents'] = $this->category_model->get_parent();
@@ -76,7 +76,7 @@ class Product extends MY_Controller
 		$this->template->render();
 	}
 
-	public function get_edit($pro_id)
+	public function edit($pro_id)
 	{
 		$data['create'] = FALSE;
 		$data['product'] = $this->product_model->find_record($pro_id);
@@ -98,8 +98,9 @@ class Product extends MY_Controller
 
 	public function delete()
 	{
-		$pro_id = $this->input->post('id');
-		$images_pro_id = $this->product_model->find_record($pro_id)[0]['pro_id'];
+		$pro_id = (int) $this->input->post('id');
+		$model = $this->product_model->find_record($pro_id);
+		$images_pro_id = $model[0]['pro_id'];
 		$images = $this->product_model->find_image_record($images_pro_id);
 
 		foreach ($images as $img)
@@ -117,23 +118,32 @@ class Product extends MY_Controller
 
 	public function delete_image()
 	{
-		$image_id = $this->input->post('id');
-		$path = $this->product_model->get_image_url($image_id)[0]['url'];
+		$image_id = (int) $this->input->post('id');
+		$model = $this->product_model->get_image_url($image_id);
+		$path = $model[0]['url'];
 		unlink($path);
 		$this->product_model->delete_image($image_id);
 
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	public function post_create()
+	public function save()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean|is_unique[shop_product.name]');
+		$this->form_validation->set_rules('name', 'Name', 'required|xss_clean');
 		$this->form_validation->set_rules('price', 'Price', 'required|(decimal||integer)|xss_clean');
 		$this->form_validation->set_rules('description', 'Description', 'required|xss_clean');
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->get_create();
+			if ($this->input->post('id'))
+			{
+				$pro_id = (int) $this->input->post('id');
+				$this->edit($pro_id);
+			}
+			else
+			{
+				$this->create();
+			}
 		}
 		else
 		{
@@ -149,10 +159,20 @@ class Product extends MY_Controller
 				'color_id' => $color_id,
 				'description' => $description
 			);
-			$pro_id = $this->product_model->add_product($data);
+
+			if ($this->input->post('id'))
+			{
+				$pro_id = (int) $this->input->post('id');
+				$this->product_model->update_product($pro_id, $data);
+				$this->product_category_model->delete($pro_id);
+			}
+			else
+			{
+				$pro_id = $this->product_model->add_product($data);
+			}
 
 			//Product Category
-			foreach ($this->input->post('cat_id') as $cid)
+			foreach ($cat_id as $cid)
 			{
 				$data = array(
 					'pro_id' => $pro_id,
@@ -163,33 +183,38 @@ class Product extends MY_Controller
 			//End
 
 			//Upload
-			$path = realpath('./public/images');
-			if (!is_dir($path))
-			{
-				mkdir($path, 0755, TRUE);
-			}
-
-			$config['upload_path'] = $path;
-			$config['allowed_types'] = 'gif|jpg|png';
-			$config['max_size'] = '2048';
-			$config['encrypt_name'] = FALSE;
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
-
-			for ($i = 1; $i < 4; $i++)
-			{
-				$check_upload = $this->upload->do_upload('img' . $i);
-				if ($check_upload)
-				{
-					$data = array(
-						'pro_id' => $pro_id,
-						'url' => 'public/images/' . $_FILES['img' . $i]['name']
-					);
-					$this->product_model->add_image($data);
-				}
-			}
+			$this->upload_image($pro_id);
 			//End
 			redirect('product/index');
+		}
+	}
+
+	public function upload_image($pro_id)
+	{
+		$path = realpath('./public/images');
+		if (!is_dir($path))
+		{
+			mkdir($path, 0755, TRUE);
+		}
+
+		$config['upload_path'] = $path;
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '2048';
+		$config['encrypt_name'] = FALSE;
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+
+		for ($i = 1; $i < 4; $i++)
+		{
+			$check_upload = $this->upload->do_upload('img' . $i);
+			if ($check_upload)
+			{
+				$data = array(
+					'pro_id' => $pro_id,
+					'url' => 'public/images/' . $_FILES['img' . $i]['name']
+				);
+				$this->product_model->add_image($data);
+			}
 		}
 	}
 
@@ -201,12 +226,12 @@ class Product extends MY_Controller
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$pro_id = $this->input->post('id');
+			$pro_id = (int) $this->input->post('id');
 			$this->get_edit($pro_id);
 		}
 		else
 		{
-			$pro_id = $this->input->post('id');
+			$pro_id = (int) $this->input->post('id');
 			$name = trim($this->input->post('name'));
 			$price = trim($this->input->post('price'));
 			$color_id = $this->input->post('color_id');

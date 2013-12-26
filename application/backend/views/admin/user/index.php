@@ -1,23 +1,3 @@
-<!-- Phan Trang -->
-<script>
-	$(document).ready(function () {
-		$("#jquery_link a").click(function () {
-			var url = $(this).attr("href");
-			$.ajax({
-				type: "POST",
-				url: url,
-				data: "ajax=1",
-				beforeSend: function () {
-					$("#content").html("");
-				},
-				success: function (kq) {
-					$("#content").html(kq);
-				}
-			})
-			return false;
-		});
-	})
-</script>
 
 <style>
 	#jquery_link {
@@ -33,13 +13,6 @@
 
 		<div>
 			<div class="span6"></div>
-			<div class="span6">
-				<div class="right">
-					<form action="" method="get">
-						<label>Tìm kiếm: <input type="text" name="keyword" id="keyword" value=""></label>
-					</form>
-				</div>
-			</div>
 		</div>
 		<?php
 		if ($users)
@@ -64,7 +37,7 @@
 					<td><?php echo htmlspecialchars($urs['username']); ?></td>
 					<td><?php echo htmlspecialchars($urs['email']); ?></td>
 					<td><a class="btn btn-primary"
-						   href="<?php echo base_url(); ?>index.php/user/get_edit/<?php echo $urs['user_id']; ?>">Sửa</a>
+						   href="<?php echo base_url(); ?>index.php/user/edit/<?php echo $urs['user_id']; ?>">Sửa</a>
 						<a class="delete_toggler btn btn-danger" rel="<?php echo $urs['user_id']; ?>">Xóa</a>
 					</td>
 				</tr>
@@ -82,7 +55,7 @@
 			Phân Trang
 			<?php echo $pagination; ?>
 		</div>
-		<a href="<?php echo base_url(); ?>index.php/user/get_create" class="btn btn-primary right">Thêm mới</a>
+		<a href="<?php echo base_url(); ?>index.php/user/create" class="btn btn-primary right">Thêm mới</a>
 	</div>
 </div>
 </div>

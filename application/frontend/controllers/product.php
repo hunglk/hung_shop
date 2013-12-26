@@ -60,6 +60,7 @@ class Product extends MY_Controller
 
 		$str_where_clause = $this->product_model->get_str_where_clause($catid , $array_pid , $color_id , $amt , $min , $max );
 		$total = $this->product_model->count_records_limt($str_where_clause);
+		//print_r($str_where_clause); exit;
 
 		$config = array();
 		$config['base_url'] = base_url('index.php/product/filter/');
@@ -69,7 +70,7 @@ class Product extends MY_Controller
 
 		$this->pagination->initialize($config);
 		$data['pagination_home_product'] = $this->pagination->create_links();
-		$start = $this->uri->segment(3);
+		$start = (int) $this->uri->segment(3);
 
 		$products = $this->product_model->get_records_limit($str_where_clause, $config['per_page'], $start);
 

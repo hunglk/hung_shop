@@ -23,6 +23,10 @@
 	<script src="<?php echo base_url(); ?>public/js/admin/jquery-ui-custom.js"></script>
 	<script src="<?php echo base_url(); ?>public/js/admin/bootstrap.js"></script>
 	<script src="<?php echo base_url(); ?>public/js/admin/editor/editor.js"></script>
+	<script>
+		var root_url = '<?php echo base_url() ?>';
+	</script>
+	<script src="<?php echo base_url(); ?>public/js/admin/myjs.js"></script>
 
 	<title>AdminCP</title>
 </head>

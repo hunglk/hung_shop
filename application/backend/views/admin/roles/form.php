@@ -4,7 +4,7 @@
 			<!--Form-->
 			<?php
 			$attributes = array('class' => 'form-horizontal');
-			echo form_open('roles/' . ($create ? 'post_create' : 'post_edit'), $attributes);
+			echo form_open('roles/save', $attributes);
 			?>
 			<? if (!$create): ?> <input type="hidden" name="id"
 										value="<?php echo($create ? '' : $role[0]['pm_id']); ?>"/> <? endif; ?>
@@ -23,7 +23,7 @@
 								?>
 								<option value="<?php echo $group['group_user_id']; ?>"
 									<?php
-									if (($create ? '' : $role[0]['id_group_user']) === $group['group_user_id'])
+									if (($create ? '' : $role[0]['group_user_id']) === $group['group_user_id'])
 									{
 										echo 'selected';
 									}

@@ -33,7 +33,7 @@
 							<td><?php echo $role['group_user'][0]['name']; ?></td>
 							<td><?php echo $role['module'][0]['name']; ?></td>
 							<td><a class="btn btn-primary"
-								   href="<?php echo base_url(); ?>index.php/roles/get_edit/<?php echo $role['pm_id']; ?>">Sửa</a>
+								   href="<?php echo base_url(); ?>index.php/roles/edit/<?php echo $role['pm_id']; ?>">Sửa</a>
 								<a class="delete_toggler btn btn-danger" rel="<?php echo $role['pm_id']; ?>">Xóa</a>
 							</td>
 						</tr>
@@ -47,7 +47,7 @@
 					?>
 					</tbody>
 				</table>
-				<a href="<?php echo base_url(); ?>index.php/roles/get_create" class="btn btn-primary right">Thêm mới</a>
+				<a href="<?php echo base_url(); ?>index.php/roles/create" class="btn btn-primary right">Thêm mới</a>
 			</div>
 		</div>
 

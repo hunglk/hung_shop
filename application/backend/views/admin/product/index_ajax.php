@@ -1,32 +1,6 @@
-<!-- Phan Trang -->
-<script>
-	$(document).ready(function () {
-		$("#jquery_link_product a").click(function () {
-			var url = $(this).attr("href");
-			$.ajax({
-				type: "POST",
-				url: url,
-				data: "ajax=1",
-				beforeSend: function () {
-					$("#content").html("");
-				},
-				success: function (kq) {
-					$("#content").html(kq);
-				}
-			})
-			return false;
-		});
-	})
-</script>
-<!-- Search -->
 
-<style>
-	#jquery_link_product {
-		margin-top: 5px;
-	}
-</style>
 <h2>Sản phẩm</h2>
-<p><a href="<?php echo base_url(); ?>index.php/product/get_create" class="btn btn-primary">Thêm mới</a></p>
+<p><a href="<?php echo base_url(); ?>index.php/product/create" class="btn btn-primary">Thêm mới</a></p>
 <?php
 if ($products)
 {
@@ -51,7 +25,7 @@ if ($products)
 		<tr>
 			<td><?php echo $pro['pro_id']; ?></td>
 			<td><?php echo htmlspecialchars($pro['name']); ?></td>
-			<td><?php echo $pro['price']; ?></td>
+			<td><?php echo round($pro['price'],2); ?></td>
 			<td><a href="#"><img src="<?php echo base_url() . $pro['prod_img'][0]['url']; ?>" width="70px" height="70px"
 								 alt=""></a></td>
 			<td><?php echo $pro['prod_color'][0]['name']; ?> </td>
@@ -64,7 +38,7 @@ if ($products)
 						echo 'No Active';
 					?> </a>
 				<a class="btn btn-primary"
-				   href="<?php echo base_url(); ?>index.php/product/get_edit?id=<?php echo $pro['pro_id']; ?>">Sửa</a>
+				   href="<?php echo base_url(); ?>index.php/product/edit/<?php echo $pro['pro_id']; ?>">Sửa</a>
 				<a class="delete_toggler btn btn-danger" rel="<?php echo $pro['pro_id']; ?>">Xóa</a></td>
 		</tr>
 	<?php

@@ -32,7 +32,7 @@ class Browser extends MY_Controller
 		$this->pagination->initialize($config);
 		$data['pagination_home_product'] = $this->pagination->create_links();
 
-		$start = $this->uri->segment(4);
+		$start = (int) $this->uri->segment(4);
 
 		if (count($array_pid) === 0)
 		{
@@ -58,6 +58,7 @@ class Browser extends MY_Controller
 			$this->template->render();
 		}
 	}
+
 }
 
 

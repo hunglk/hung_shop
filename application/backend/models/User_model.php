@@ -9,14 +9,14 @@ class User_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function get_search($keyword, $offset, $start)
+	public function check_login($username, $password)
 	{
-		$this->db->select();
-		$this->db->like('username', $keyword);
-		$this->db->or_like('email', $keyword);
-		$this->db->limit($offset, $start);
-		$this->db->order_by('user_id', 'desc');
-		return $this->db->get($this->table_name)->result_array();
+		$md5pass = md5($password);
+		$this->db->where('username', $username);
+		$this->db->where('password', $md5pass);
+
+		$query = $this->db->get($this->table_name);
+		return $query->result_array();
 	}
 
 	public function get_list_user($offset, $start)

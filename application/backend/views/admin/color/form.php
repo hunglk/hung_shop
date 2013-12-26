@@ -4,7 +4,7 @@
 			<!--Form-->
 			<?php
 			$attributes = array('class' => 'form-horizontal');
-			echo form_open('color/' . ($create ? 'post_create' : 'post_edit'), $attributes);
+			echo form_open('color/save', $attributes);
 			?>
 			<? if (!$create): ?> <input type="hidden" name="id"
 										value="<?php echo($create ? '' : $color[0]['color_id']); ?>"/> <? endif; ?>

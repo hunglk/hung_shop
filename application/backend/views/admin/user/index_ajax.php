@@ -1,25 +1,3 @@
-<!-- Phan Trang -->
-<script>
-	$(document).ready(function () {
-		$("#jquery_link a").click(function () {
-			var url = $(this).attr("href");
-			$.ajax({
-				type: "POST",
-				url: url,
-				data: "ajax=1",
-				beforeSend: function () {
-					$("#content").html("");
-				},
-				success: function (kq) {
-					$("#content").html(kq);
-					//$("#content").append("cai chim");
-				}
-			})
-			return false;
-		});
-	})
-</script>
-<!-- Search -->
 
 <style>
 	#jquery_link {
@@ -48,7 +26,7 @@
 			<td><?php echo $urs['username']; ?></td>
 			<td><?php echo $urs['email']; ?></td>
 			<td><a class="btn btn-primary"
-				   href="<?php echo base_url(); ?>index.php/user/get_edit?id=<?php echo $urs['user_id']; ?>">Edit</a>
+				   href="<?php echo base_url(); ?>index.php/user/edit/<?php echo $urs['user_id']; ?>">Edit</a>
 				<a class="delete_toggler btn btn-danger" rel="<?php echo $urs['user_id']; ?>">Delete</a></td>
 		</tr>
 	<?php } ?>
@@ -59,7 +37,7 @@
 	<?php echo $pagination; ?>
 </div>
 
-<a href="<?php echo base_url(); ?>index.php/user/get_create" class="btn btn-primary right">New User</a>
+<a href="<?php echo base_url(); ?>index.php/user/create" class="btn btn-primary right">New User</a>
 
 
 

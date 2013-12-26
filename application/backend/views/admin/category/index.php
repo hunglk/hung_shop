@@ -6,7 +6,7 @@ function show_cat($cats, $level)
 	echo '<tr>';
 	echo '<td>' . $cats['cat_id'] . '</td>';
 	echo "<td>" . $str_space . htmlspecialchars($cats['name']) . "</td>";
-	echo "<td><a class='btn btn-primary' href='" . base_url();?>index.php/category/get_edit/<?php echo $cats['cat_id'] . "'> Sửa </a>
+	echo "<td><a class='btn btn-primary' href='" . base_url();?>index.php/category/edit/<?php echo $cats['cat_id'] . "'> Sửa </a>
               <a class='delete_toggler btn btn-danger' rel='" . $cats['cat_id'] . "'>Xóa</a>
           </td>";
 	echo '<tr>';
@@ -35,7 +35,7 @@ function insert_space($count)
 	<div id="content">
 		<h2>Categories</h2>
 
-		<p><a href="<?php echo base_url(); ?>index.php/category/get_create" class="btn btn-primary">Thêm mới</a>
+		<p><a href="<?php echo base_url(); ?>index.php/category/create" class="btn btn-primary">Thêm mới</a>
 		</p>
 
 		<table class="table table-striped table-bordered table-condensed">

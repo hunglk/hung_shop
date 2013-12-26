@@ -14,12 +14,13 @@ class My_Controller extends CI_Controller
 		$this->load->Model('permision_model');
 
 		//check session
-		if (!$this->session->userdata('user_id')) {
+		if ( ! $this->session->userdata('user_id'))
+		{
 			redirect('admin/index');
 		}
 		//check permision
 		$check_permision = $this->permision_model->get_permison();
-		if (!$check_permision)
+		if ( ! $check_permision)
 		{
 			$this->session->set_flashdata('permision_error', TRUE);
 			redirect('admin/dash');
@@ -39,4 +40,3 @@ class My_Controller extends CI_Controller
 	}
 }
 
-?>

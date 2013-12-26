@@ -40,11 +40,12 @@ class Permision_model extends CI_Model
 
 	public function get_permison()
 	{
-		$module_id = $this->get_module()[0]['module_id'];
+		$module = $this->get_module();
+		$module_id = $module[0]['module_id'];
 		$group_user_id = $this->session->userdata('group_user_id');
 
 		$this->db->where('module_id', $module_id);
-		$this->db->where('id_group_user', $group_user_id);
+		$this->db->where('group_user_id', $group_user_id);
 		$query = $this->db->get($this->table_name);
 
 		$return = $query->result_array();

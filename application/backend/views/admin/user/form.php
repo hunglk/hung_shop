@@ -4,7 +4,7 @@
 			<!--Form-->
 			<?php
 			$attributes = array('class' => 'form-horizontal','id' => 'myform','name' => 'myform');
-			echo form_open('user/' . ($create ? 'post_create' : 'post_edit'), $attributes);
+			echo form_open('user/save', $attributes);
 			?>
 			<? if (!$create): ?> <input type="hidden" name="id"
 										value="<?php echo($create ? '' : $user[0]['user_id']); ?>"/> <? endif; ?>

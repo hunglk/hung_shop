@@ -22,18 +22,9 @@ class User extends MY_Controller
 		$this->pagination->initialize($config);
 		$data['pagination'] = $this->pagination->create_links();
 
-		$start = $this->uri->segment(3);
+		$start = (int) $this->uri->segment(3);
 
-		$keyword = $this->input->get('keyword');
-		if (empty($keyword))
-		{
-			$data['users'] = $this->user_model->get_list_user($config['per_page'], $start);
-		}
-		else
-		{
-			$data['users'] = $this->user_model->get_search($keyword, $config['per_page'], $start);
-		}
-
+		$data['users'] = $this->user_model->get_list_user($config['per_page'], $start);
 		if ($this->input->post('ajax'))
 		{
 			$this->load->view('admin/user/index_ajax', $data);
@@ -46,7 +37,7 @@ class User extends MY_Controller
 
 	}
 
-	public function get_create()
+	public function create()
 	{
 		$data['create'] = TRUE;
 		$data['roles'] = $this->permision_model->get_list_group_user();
@@ -54,7 +45,7 @@ class User extends MY_Controller
 		$this->template->render();
 	}
 
-	public function get_edit($user_id)
+	public function edit($user_id)
 	{
 		$data['create'] = FALSE;
 		$data['user'] = $this->user_model->find_record($user_id);
@@ -66,82 +57,65 @@ class User extends MY_Controller
 
 	public function delete()
 	{
-		$user_id = $this->input->post('id');
+		$user_id = (int) $this->input->post('id');
 		$this->user_model->delete($user_id);
 
 		redirect('user/index');
 	}
 
-	public function post_create()
+	public function save()
 	{
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
-		$this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email|is_unique[shop_user.email]');
+		$this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim|matches[password_confirm]');
 		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim');
 		$this->form_validation->set_rules('role_id', 'Roles', 'required');
 
 		if ($this->form_validation->run() == FALSE)
 		{
-			$this->get_create();
+			if ($this->input->post('id'))
+			{
+				$user_id = (int) $this->input->post('id');
+				$this->edit($user_id);
+			}
+			else
+			{
+				$this->create();
+			}
 		}
 		else
 		{
 			$username = trim($this->input->post('username'));
 			$email = trim($this->input->post('email'));
-			$password = trim($this->input->post('password'));
-			$md5pass = trim(MD5($password));
-			$role_id = $this->input->post('role_id');
-
-			$data = array(
-				'username' => $username,
-				'password' => $md5pass,
-				'email' => $email,
-				'group_user_id' => $role_id
-			);
-			$this->user_model->add_user($data);
-
-			redirect('user/index');
-		}
-	}
-
-	public function post_edit()
-	{
-			$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
-			$this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email');
-			$this->form_validation->set_rules('password', 'Password', 'required|trim|matches[password_confirm]');
-			$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim');
-			$this->form_validation->set_rules('role_id', 'Roles', 'required');
-
-			if ($this->form_validation->run() == FALSE)
+			if ($this->input->post('password'))
 			{
-				$user_id = $this->input->post('id');
-				$this->get_edit($user_id);
+				$password = trim(MD5($this->input->post('password')));
 			}
 			else
 			{
-				$user_id = $this->input->post('id');
-				$username = trim($this->input->post('username'));
-				$email = trim($this->input->post('email'));
-				if ($this->input->post('password'))
-				{
-					$password = trim(MD5($this->input->post('password')));
-				}
-				else
-				{
-					$password = $this->input->post('oldpass');
-				}
-				$role_id = $this->input->post('role_id');
-
-				$data = array(
-					'username' => $username,
-					'password' => $password,
-					'email' => $email,
-					'group_user_id' => $role_id
-				);
-
-				$this->user_model->update_user($user_id, $data);
-				redirect('user/index');
+				$password = $this->input->post('oldpass');
 			}
+			$role_id = (int) $this->input->post('role_id');
+
+			$data = array(
+				'username' => $username,
+				'password' => $password,
+				'email' => $email,
+				'group_user_id' => $role_id
+			);
+
+			if ($this->input->post('id'))
+			{
+				$user_id = (int) $this->input->post('id');
+				$this->user_model->update_user($user_id, $data);
+			}
+			else
+			{
+				$this->user_model->add_user($data);
+			}
+
+			redirect('user/index');
+		}
 	}
 
 }

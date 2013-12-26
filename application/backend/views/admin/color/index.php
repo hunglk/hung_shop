@@ -30,7 +30,7 @@
 							<td><?php echo $color['color_id']; ?></td>
 							<td><?php echo htmlspecialchars($color['name']); ?></td>
 							<td><a class="btn btn-primary"
-								   href="<?php echo base_url(); ?>index.php/color/get_edit/<?php echo $color['color_id']; ?>">Sửa</a>
+								   href="<?php echo base_url(); ?>index.php/color/edit/<?php echo $color['color_id']; ?>">Sửa</a>
 								<a class="delete_toggler btn btn-danger" rel="<?php echo $color['color_id']; ?>">Xóa</a>
 							</td>
 						</tr>
@@ -44,7 +44,7 @@
 					?>
 					</tbody>
 				</table>
-				<a href="<?php echo base_url(); ?>index.php/color/get_create" class="btn btn-primary right">Thêm mới</a>
+				<a href="<?php echo base_url(); ?>index.php/color/create" class="btn btn-primary right">Thêm mới</a>
 			</div>
 		</div>
 

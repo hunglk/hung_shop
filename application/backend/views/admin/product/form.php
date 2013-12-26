@@ -41,7 +41,7 @@ function insert_space($count)
 			<h2><?php echo($create ? 'Add Product ' : 'Edit Product '); ?> </h2>
 			<?php
 			$attributes = array('class' => 'form-horizontal','id' => 'myform','name' => 'myform');
-			echo form_open_multipart('product/' . ($create ? 'post_create' : 'post_edit'), $attributes);
+			echo form_open_multipart('product/save', $attributes);
 			?>
 			<? if (!$create): ?> <input type="hidden" name="id"
 										value="<?php echo($create ? '' : $product[0]['pro_id']); ?>"/> <? endif; ?>

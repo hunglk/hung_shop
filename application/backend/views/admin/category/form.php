@@ -41,7 +41,7 @@ function insert_space($count)
 	<h2><?php echo($create ? 'Add Category ' : 'Edit Category '); ?> </h2>
 	<?php
 	$attributes = array('class' => 'form-horizontal', 'id' => 'myform', 'name' => 'myform');
-	echo form_open('category/' . ($create ? 'post_create' : 'post_edit'), $attributes);
+	echo form_open('category/save', $attributes);
 	?>
 	<? if (!$create): ?> <input type="hidden" name="id"
 								value="<?php echo($create ? '' : $category[0]['cat_id']); ?>"/> <? endif; ?>
