@@ -51,6 +51,8 @@ class Product extends MY_Controller
 		$max = ltrim($range[1],'$');
 		$catid = $this->input->post('catid');
 		$color_id = $this->input->post('color_id');
+		//print_r($color_id); exit;
+
 		$pro_id = $this->product_category_model->get_pro_id_by_cat_id($catid);
 		$array_pid = array();
 		foreach ($pro_id as $pid)
@@ -65,7 +67,7 @@ class Product extends MY_Controller
 		$config = array();
 		$config['base_url'] = base_url('index.php/product/filter/');
 		$config['total_rows'] = $total;
-		$config['per_page'] = per_02;
+		$config['per_page'] = per_03;
 		$config['uri_segment'] = 3;
 
 		$this->pagination->initialize($config);
@@ -74,7 +76,7 @@ class Product extends MY_Controller
 
 		$products = $this->product_model->get_records_limit($str_where_clause, $config['per_page'], $start);
 
-		if (!empty($products))
+		if ( ! empty($products))
 		{
 			foreach ($products as $key => $prod)
 			{

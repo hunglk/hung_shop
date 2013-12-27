@@ -12,6 +12,7 @@ class Product_model extends CI_Model
 //PRODUCT
 	public function get_top5()
 	{
+		$this->db->where('selected_id !=', '0');
 		$this->db->order_by('selected_id', 'desc');
 		$this->db->limit(5);
 		return $this->db->get($this->table_name)->result_array();
@@ -20,17 +21,18 @@ class Product_model extends CI_Model
 	public function get_str_where_clause($catid = NULL, $array_pid = NULL, $color_id = NULL, $amt = NULL, $min = NULL, $max = NULL)
 	{
 		$str_where_clause = "1=1";
-		if (count($array_pid) > 0)
-		{
-			$str_where_clause .= " and pro_id in (select pro_id from shop_product_category where cat_id={$catid})";
-		}
-		if ($color_id)
-		{
-			$str_where_clause .= " and color_id = {$color_id}";
-		}
 		if (strlen($amt)>0)
 		{
 			$str_where_clause .= " and price >= {$min} and price <= {$max}";
+		}
+		if ($color_id)
+		{
+			$arr = implode ( ', ', $color_id);
+			$str_where_clause .= " and color_id in ({$arr})";
+		}
+		if (count($array_pid) > 0)
+		{
+			$str_where_clause .= " and pro_id in (select pro_id from shop_product_category where cat_id={$catid})";
 		}
 		return $str_where_clause;
 	}

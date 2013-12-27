@@ -1,5 +1,3 @@
-</div>
-<!-- End Content -->
 	<!-- Sidebar -->
 	<?php echo $this->load->view('inc/sidebar_home'); ?>
 	<!-- End Sidebar -->

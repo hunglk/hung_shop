@@ -15,7 +15,7 @@
 		<div class="cl">&nbsp;</div>
 		<ul>
 			<?php
-			if($products)
+			if(isset($products))
 			{
 				$i = 0;
 				foreach ($products as $pro)
@@ -35,6 +35,10 @@
 					</li>
 				<?php
 				}
+			}
+			else
+			{
+				echo 'Sản phẩm đang được cập nhật!';
 			}
 			?>
 		</ul>

@@ -27,18 +27,17 @@ class My_Controller extends CI_Controller
 		$data['cats'] = $cats;
 		$data['colors'] = $this->product_model->get_list_color();
 
-		$products = $this->product_model->get_top5();
-		if (!empty($products))
-		{
-			foreach ($products as $key => $prod)
-			{
-				$products[$key]['prod_img'] = $this->product_model->find_image_record($prod['pro_id']);
-			}
-			$data['products'] = $products;
-		}
-
 		if ($controller_name === 'home')
 		{
+			$products = $this->product_model->get_top5();
+			if (!empty($products))
+			{
+				foreach ($products as $key => $prod)
+				{
+					$products[$key]['prod_img'] = $this->product_model->find_image_record($prod['pro_id']);
+				}
+				$data['products'] = $products;
+			}
 			$this->template->set_template('home');
 			$this->template->parse_view('header', 'inc/header_home', $data);
 			$this->template->parse_view('footer', 'inc/footer_home', $data);

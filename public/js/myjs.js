@@ -6,18 +6,19 @@ $(document).ready(function () {
 });
 
 function filter_product() {
-    $('input[name="btn_submit"]').click(function () {
+    $('input[name="btn_submit"]').click(function (e) {
+        var chk_color = new Array();
+        $("#color_id:checked").each(function(){
+            chk_color.push($(this).val());
+        });
         $.ajax({
             type: 'POST',
             url: root_url + 'index.php/product/filter',
             data: {
                 amount: $("#amount").val(),
                 catid: $("#hiddent_cat_id").val(),
-                color_id: $("#color_id:checked").val(),
+                color_id: chk_color,
                 datatype: 'html'
-            },
-            beforeSend: function () {
-                $("#prod_content").html("");
             },
             success: function (kq) {
                 $("#prod_content").html(kq);
@@ -34,7 +35,7 @@ function slider_product() {
         range: true,
         min: 0,
         max: 500,
-        values: [ 58, 300 ],
+        values: [ 0, 500 ],
         slide: function( event, ui ) {
             $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
         }
@@ -72,10 +73,8 @@ function pagination_product() {
             url: url,
             data: {
                 "ajax" : 1,
-                "amount" : $('#hiddent_current_price').val()
-            },
-            beforeSend: function(){
-                $("#prod_content").html("");
+                "amount" : $('#hiddent_current_price').val(),
+                "catid" : $('#hiddent_cat_id').val()
             },
             success: function(kq){
                 $("#prod_content").html(kq);

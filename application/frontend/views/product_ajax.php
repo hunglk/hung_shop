@@ -32,4 +32,5 @@
 	?>
 </ul>
 <div class="cl">&nbsp;</div>
-<?php if(isset($current_price)) : ?> <input type="hidden" id="hiddent_current_price" value="<?php echo $current_price; ?>" /> <?php endif; ?>
+<?php if(isset($current_price)) : ?> <input type="hidden" id="hiddent_current_price" value="<?php echo $current_price; ?>" />
+<?php endif; ?>
