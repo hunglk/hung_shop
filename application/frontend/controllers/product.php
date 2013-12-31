@@ -29,6 +29,7 @@ class Product extends MY_Controller
 		}
 
 		$data['products'] = $products;
+		$data['colors'] = $this->product_model->get_list_color();
 
 		if ($this->input->post('ajax'))
 		{
@@ -46,13 +47,13 @@ class Product extends MY_Controller
 		$data = array();
 		$amt = $this->input->post('amount');
 		$data['current_price'] = $amt;
+
 		$range = explode(' - ', $amt);
 		$min = ltrim($range[0],'$');
 		$max = ltrim($range[1],'$');
 		$catid = $this->input->post('catid');
 		$color_id = $this->input->post('color_id');
-		//print_r($color_id); exit;
-
+		$color_id_encode = $this->input->post('color_id_encode');
 		$pro_id = $this->product_category_model->get_pro_id_by_cat_id($catid);
 		$array_pid = array();
 		foreach ($pro_id as $pid)
@@ -60,10 +61,20 @@ class Product extends MY_Controller
 			$array_pid[] = $pid['pro_id'];
 		}
 
-		$str_where_clause = $this->product_model->get_str_where_clause($catid , $array_pid , $color_id , $amt , $min , $max );
-		$total = $this->product_model->count_records_limt($str_where_clause);
-		//print_r($str_where_clause); exit;
+		$str_where_clause = "";
+		if(isset($color_id_encode) && strlen($color_id_encode)>0)
+		{
+			$data['color_id'] = json_decode($color_id_encode);
+			$str_where_clause = $this->product_model->get_str_where_clause($catid = NULL, $array_pid , $data['color_id'] , $amt , $min , $max );
+		}
+		elseif(isset($color_id))
+		{
+			$data['color_id'] = $color_id;
+			$str_where_clause = $this->product_model->get_str_where_clause($catid , $array_pid , $color_id , $amt , $min , $max );
+		}
 
+		$total = $this->product_model->count_records_limt($str_where_clause);
+		//print_r($str_where_clause);
 		$config = array();
 		$config['base_url'] = base_url('index.php/product/filter/');
 		$config['total_rows'] = $total;
@@ -86,6 +97,22 @@ class Product extends MY_Controller
 		}
 
 		$this->load->view('product_ajax',$data);
+	}
+
+	public function set_color_filter()
+	{
+		$array_pid = json_decode($this->input->post('array_pid'));
+		$colors = $this->product_model->get_color_by_pid($array_pid);
+		if ( ! empty($colors))
+		{
+			foreach($colors as $key => $color)
+			{
+				$colors[$key]['color_name'] = $this->product_model->find_color_record($color['color_id']) ;
+			}
+		}
+
+		$data['colors'] = $colors;
+		$this->load->view('color_filter_ajax',$data);
 	}
 
 	public function detail($proid)

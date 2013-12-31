@@ -25,30 +25,10 @@ class My_Controller extends CI_Controller
 			$cats[$key]['child_cats'] = $this->category_model->get_child_cats($cat);
 		}
 		$data['cats'] = $cats;
-		$data['colors'] = $this->product_model->get_list_color();
 
-		if ($controller_name === 'home')
-		{
-			$products = $this->product_model->get_top5();
-			if (!empty($products))
-			{
-				foreach ($products as $key => $prod)
-				{
-					$products[$key]['prod_img'] = $this->product_model->find_image_record($prod['pro_id']);
-				}
-				$data['products'] = $products;
-			}
-			$this->template->set_template('home');
-			$this->template->parse_view('header', 'inc/header_home', $data);
-			$this->template->parse_view('footer', 'inc/footer_home', $data);
-		}
-		else
-		{
-			$this->template->set_template('frontend');
-			$this->template->parse_view('header', 'inc/header', $data);
-			$this->template->parse_view('footer', 'inc/footer', $data);
-		}
-
+		$this->template->set_template('frontend');
+		$this->template->parse_view('header', 'inc/header', $data);
+		$this->template->parse_view('footer', 'inc/footer', $data);
 	}
 }
 

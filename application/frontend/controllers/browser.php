@@ -23,6 +23,7 @@ class Browser extends MY_Controller
 		$data = array();
 		$data['catid'] = $catid;
 
+
 		$config = array();
 		$config['base_url'] = base_url('index.php/browser/index/' . $catid);
 		$config['total_rows'] = count($array_pid);
@@ -48,6 +49,7 @@ class Browser extends MY_Controller
 			}
 			$data['products'] = $products;
 		}
+
 		if ($this->input->post('ajax'))
 		{
 			$this->load->view('product_ajax',$data);

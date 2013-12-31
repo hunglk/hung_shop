@@ -115,6 +115,13 @@ class Product_model extends CI_Model
 		$this->db->order_by('pro_id', 'desc');
 		return $this->db->get($this->table_name)->result_array();
 	}
+
+	public function get_color_by_pid($array_pid)
+	{
+		$this->db->distinct();
+		$this->db->where_in('pro_id', $array_pid);
+		return $this->db->get($this->table_name)->result_array();
+	}
 //IMAGE
 	public function get_image_url($image_id)
 	{
