@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    filter_product();
     slider_product();
     category_tree_view();
     pagination_product();
@@ -22,32 +21,6 @@ function load_filter()
             $("#filter_color").html(kq);
         }
     }).done(function () {
-
-    });
-}
-
-function filter_product() {
-    $('input[name="filter_submit"]').click(function (e) {
-        var chk_color = new Array();
-        $("#color_id:checked").each(function(){
-            chk_color.push($(this).val());
-        });
-        $.ajax({
-            type: 'POST',
-            url: root_url + 'index.php/product/filter',
-            data: {
-                amount: $("#amount").val(),
-                catid: $("#hiddent_cat_id").val(),
-                color_id: chk_color,
-                datatype: 'html'
-            },
-            success: function (kq) {
-                $("#prod_content").html(kq);
-                //load_filter();
-            }
-        }).done(function () {
-
-        });
 
     });
 }
@@ -93,7 +66,7 @@ function filter()
         }
     }).done(function () {
 
-        });
+    });
 }
 
 function slider_product() {

@@ -19,7 +19,7 @@ class Product extends MY_Controller
 		$config = array();
 		$config['base_url'] = base_url('index.php/product/index');
 		$config['total_rows'] = $this->product_model->count_all();
-		$config['per_page'] = per_06;
+		$config['per_page'] = per_10;
 		$config['uri_segment'] = 3;
 
 		$this->pagination->initialize($config);

@@ -1,3 +1,30 @@
+<?php
+if (isset($max) && isset($min))
+{
+	$min_price = $min[0]['price'];
+	$max_price = $max[0]['price'];
+}
+?>
+<script>
+	function slider_product() {
+		$( "#slider-range" ).slider({
+			range: true,
+			min: <?php echo $min_price; ?>,
+			max: <?php echo $max_price; ?>,
+			values: [ 0, 500 ],
+			slide: function( event, ui ) {
+				$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+			},
+			change: function( event, ui ) {
+			filter();
+		}
+		});
+		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+			" - $" + $( "#slider-range" ).slider( "values", 1 ) );
+	}
+</script>
+
+
 <style>
 	#jquery_home_product {
 		margin-top: 5px;

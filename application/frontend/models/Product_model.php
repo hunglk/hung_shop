@@ -123,6 +123,20 @@ class Product_model extends CI_Model
 		$this->db->where_in('pro_id', $array_pid);
 		return $this->db->get($this->table_name)->result_array();
 	}
+
+	public function get_min_price($array_pid)
+	{
+		$this->db->select_min('price');
+		$this->db->where_in('pro_id', $array_pid);
+		return $this->db->get($this->table_name)->result_array();
+	}
+
+	public function get_max_price($array_pid)
+	{
+		$this->db->select_max('price');
+		$this->db->where_in('pro_id', $array_pid);
+		return $this->db->get($this->table_name)->result_array();
+	}
 //PRODUCT CATEGORY
 	public function find_pro_cat_record($pro_id)
 	{

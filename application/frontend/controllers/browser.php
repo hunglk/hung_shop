@@ -42,6 +42,8 @@ class Browser extends MY_Controller
 
 		$data = array();
 		$data['catid'] = $catid;
+		$data['max'] = $this->product_model->get_max_price($array_pid);
+		$data['min'] = $this->product_model->get_min_price($array_pid);
 
 		if ( ! empty($array_pid))
 		{

@@ -99,17 +99,21 @@ class Category_model extends CI_Model
 		$record = $this->find_record($cat_id);
 		$parent_id = $record[0]['parent_id'];
 
-		$record_by_parent_id = $this->find_record_by_parent_id($cat_id);
-		$array_pid = array();
-		foreach ($record_by_parent_id as $pid)
-		{
-			$array_pid[] = $pid['cat_id'];
-		}
 
-		$data = array(
-			'parent_id' => $parent_id
-		);
-		$this->update_array_category($array_pid, $data);
+		if ($this->find_record_by_parent_id($cat_id))
+		{
+			$record_by_parent_id = $this->find_record_by_parent_id($cat_id);
+			$array_pid = array();
+			foreach ($record_by_parent_id as $pid)
+			{
+				$array_pid[] = $pid['cat_id'];
+			}
+
+			$data = array(
+				'parent_id' => $parent_id
+			);
+			$this->update_array_category($array_pid, $data);
+		}
 		//delete
 		$this->db->where('cat_id', $cat_id);
 		$this->db->delete($this->table_name);

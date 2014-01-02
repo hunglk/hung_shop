@@ -8,6 +8,7 @@ class Constant {
 		define('per_03', 3);
 		define('per_04', 4);
 		define('per_06', 6);
+		define('per_10', 10);
 	}
 
 }
