@@ -19,7 +19,7 @@ class My_Controller extends CI_Controller
 		// Set template
 		$controller_name = $this->router->fetch_class();
 
-		$cats = $this->category_model->get_records('parent_id=0');
+		$cats = $this->category_model->get_parent();
 		foreach ($cats as $key => $cat)
 		{
 			$cats[$key]['child_cats'] = $this->category_model->get_child_cats($cat);

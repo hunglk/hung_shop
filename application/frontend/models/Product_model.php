@@ -118,9 +118,26 @@ class Product_model extends CI_Model
 
 	public function get_color_by_pid($array_pid)
 	{
+		$this->db->select();
 		$this->db->distinct();
 		$this->db->where_in('pro_id', $array_pid);
 		return $this->db->get($this->table_name)->result_array();
+	}
+//PRODUCT CATEGORY
+	public function find_pro_cat_record($pro_id)
+	{
+		$this->db->where('pro_id', $pro_id);
+		$this->db->order_by('pro_cat_id', 'desc');
+		$query = $this->db->get('shop_product_category');
+		return $query->result_array();
+	}
+
+	public function get_pro_id_by_cat_id($cat_id)
+	{
+		$this->db->where_in('cat_id', $cat_id);
+		$this->db->order_by('pro_cat_id', 'desc');
+		$query = $this->db->get('shop_product_category');
+		return $query->result_array();
 	}
 //IMAGE
 	public function get_image_url($image_id)
@@ -140,6 +157,12 @@ class Product_model extends CI_Model
 //COLOR
 	public function get_list_color()
 	{
+		return $this->db->get('shop_color')->result_array();
+	}
+
+	public function get_list_color_by_cid($array_cid)
+	{
+		$this->db->where_in('color_id', $array_cid);
 		return $this->db->get('shop_color')->result_array();
 	}
 

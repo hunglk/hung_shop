@@ -6,7 +6,6 @@ class Product extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->Model('product_model');
-		$this->load->Model('product_category_model');
 	}
 
 	public function index()
@@ -54,7 +53,8 @@ class Product extends MY_Controller
 		$catid = $this->input->post('catid');
 		$color_id = $this->input->post('color_id');
 		$color_id_encode = $this->input->post('color_id_encode');
-		$pro_id = $this->product_category_model->get_pro_id_by_cat_id($catid);
+		$pro_id = $this->product_model->get_pro_id_by_cat_id($catid);
+
 		$array_pid = array();
 		foreach ($pro_id as $pid)
 		{
@@ -72,14 +72,20 @@ class Product extends MY_Controller
 			$data['color_id'] = $color_id;
 			$str_where_clause = $this->product_model->get_str_where_clause($catid , $array_pid , $color_id , $amt , $min , $max );
 		}
-
 		$total = $this->product_model->count_records_limt($str_where_clause);
-		//print_r($str_where_clause);
+
 		$config = array();
-		$config['base_url'] = base_url('index.php/product/filter/');
 		$config['total_rows'] = $total;
 		$config['per_page'] = per_03;
 		$config['uri_segment'] = 3;
+		if (! empty($catid))
+		{
+			$config['base_url'] = base_url('index.php/browser/index/' . $catid);
+		}
+		else
+		{
+			$config['base_url'] = base_url('index.php/product/filter/');
+		}
 
 		$this->pagination->initialize($config);
 		$data['pagination_home_product'] = $this->pagination->create_links();

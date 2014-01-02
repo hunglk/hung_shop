@@ -63,7 +63,6 @@ function checkbox(){
         });
         if(count_checked === 0)
         {
-            console.log("deo co cai nao");
             slider_product();
         }
         filter();
@@ -76,6 +75,9 @@ function filter()
     $("#color_id:checked").each(function () {
         chk_color.push($(this).val());
     });
+    console.log($("#hiddent_cat_id").val());
+    console.log($("#amount").val());
+    console.log(chk_color);
     $.ajax({
         type: 'POST',
         url: root_url + 'index.php/product/filter',
@@ -135,6 +137,10 @@ function category_tree_view() {
 function pagination_product() {
     $("#content").on("click", "#jquery_home_product a", function(){
         var url = $(this).attr("href");
+        console.log($('#hiddent_current_price').val());
+        console.log($('#hiddent_color_id').val());
+        console.log($('#hiddent_cat_id').val());
+        console.log($(this).attr("href"));
         $.ajax({
             type: "POST",
             url: url,

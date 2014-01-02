@@ -12,7 +12,7 @@ class Category extends MY_Controller
 	public function index()
 	{
 		//Tree Category
-		$cats = $this->category_model->get_records('parent_id=0');
+		$cats = $this->category_model->get_parent();
 		foreach ($cats as $key => $cat)
 		{
 			$cats[$key]['child_cats'] = $this->category_model->get_child_cats($cat);
