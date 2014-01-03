@@ -18,10 +18,11 @@ class Product_model extends CI_Model
 		return $this->db->get($this->table_name)->result_array();
 	}
 
-	public function get_str_where_clause($catid = NULL, $array_pid = NULL, $color_id = NULL, $amt = NULL, $min = NULL, $max = NULL)
+	public function get_str_where_clause($array_cat_id = NULL, $array_pid = NULL, $color_id = NULL, $amt = NULL, $min = NULL, $max = NULL)
 	{
 		$str_where_clause = "1=1";
-		if (strlen($amt)>0)
+
+		if ($amt)
 		{
 			$str_where_clause .= " and price >= {$min} and price <= {$max}";
 		}
@@ -30,9 +31,10 @@ class Product_model extends CI_Model
 			$arr = implode ( ', ', $color_id);
 			$str_where_clause .= " and color_id in ({$arr})";
 		}
-		if (count($array_pid) > 0)
+		if (count($array_cat_id)>0)
 		{
-			$str_where_clause .= " and pro_id in (select pro_id from shop_product_category where cat_id={$catid})";
+			$arr = implode ( ', ', $array_cat_id);
+			$str_where_clause .= " and pro_id in (select pro_id from shop_product_category where cat_id in ({$arr}))";
 		}
 		return $str_where_clause;
 	}
@@ -78,7 +80,14 @@ class Product_model extends CI_Model
 	public function get_list_product_by_id($offset, $start, $array_pid)
 	{
 		$this->db->limit($offset, $start);
-		$this->db->where_in('pro_id', $array_pid);
+		if(count($array_pid) > 0)
+		{
+			$this->db->where_in('pro_id', $array_pid);
+		}
+		else
+		{
+			return FALSE;
+		}
 		return $this->db->get($this->table_name)->result_array();
 	}
 
@@ -118,23 +127,40 @@ class Product_model extends CI_Model
 
 	public function get_color_by_pid($array_pid)
 	{
-		$this->db->select();
-		$this->db->distinct();
-		$this->db->where_in('pro_id', $array_pid);
-		return $this->db->get($this->table_name)->result_array();
+		if (count($array_pid) > 0)
+		{
+			$this->db->select();
+			$this->db->distinct();
+			$this->db->where_in('pro_id', $array_pid);
+			return $this->db->get($this->table_name)->result_array();
+		}
+		return false;
 	}
 
 	public function get_min_price($array_pid)
 	{
 		$this->db->select_min('price');
-		$this->db->where_in('pro_id', $array_pid);
+		if(count($array_pid)>0)
+		{
+			$this->db->where_in('pro_id', $array_pid);
+		}
 		return $this->db->get($this->table_name)->result_array();
 	}
 
 	public function get_max_price($array_pid)
 	{
 		$this->db->select_max('price');
-		$this->db->where_in('pro_id', $array_pid);
+		if(count($array_pid)>0)
+		{
+			$this->db->where_in('pro_id', $array_pid);
+		}
+		return $this->db->get($this->table_name)->result_array();
+	}
+
+	public function get_pid_by_amount($min, $max)
+	{
+		$this->db->where('price >', $min);
+		$this->db->where('price <', $max);
 		return $this->db->get($this->table_name)->result_array();
 	}
 //PRODUCT CATEGORY

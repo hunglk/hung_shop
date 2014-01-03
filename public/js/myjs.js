@@ -7,18 +7,23 @@ $(document).ready(function () {
     checkbox();
 });
 
-function load_filter()
+function load_filter_color()
 {
-    $("#filter_color").html('load filter');
+    //$("#filter_color").html('load filter');
     $.ajax({
         type: 'POST',
         url: root_url + 'index.php/product/set_color_filter',
         data: {
-            "color_id_encode" : $('#hiddent_color_id').val(),
-            datatype: 'html'
+            "cur_price" : $('#hiddent_current_price').val(),
+            datatype: 'json'
         },
         success: function (kq) {
-            $("#filter_color").html(kq);
+            var data = $.parseJSON(kq);
+            alert(kq);
+            $.each(data, function(){
+                $('input[name="color_id[]"]').val("123123");
+               //alert(this.color_id);
+            });
         }
     }).done(function () {
 
@@ -62,7 +67,7 @@ function filter()
         },
         success: function (kq) {
             $("#prod_content").html(kq);
-            //load_filter();
+            //load_filter_color();
         }
     }).done(function () {
 
@@ -120,6 +125,7 @@ function pagination_product() {
             data: {
                 "ajax" : 1,
                 "amount" : $('#hiddent_current_price').val(),
+                "cur_amount": "$57 - $323",
                 "catid" : $('#hiddent_cat_id').val(),
                 "color_id" : $('#hiddent_color_id').val(),
                 "color_id_encode" : $('#hiddent_color_id').val()

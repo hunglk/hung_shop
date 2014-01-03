@@ -26,6 +26,7 @@ class Browser extends MY_Controller
 	{
 		$cat_id = $catid;
 		$cats = $this->category_model->find_record($cat_id);
+
 		foreach ($cats as $key => $cat)
 		{
 			$cats[$key]['child_cats'] = $this->category_model->get_child_cats($cat);
@@ -39,12 +40,12 @@ class Browser extends MY_Controller
 		{
 			$array_pid[] = $pid['pro_id'];
 		}
-
 		$data = array();
 		$data['catid'] = $catid;
+
 		$data['max'] = $this->product_model->get_max_price($array_pid);
 		$data['min'] = $this->product_model->get_min_price($array_pid);
-
+		//Lay color_id ra view
 		if ( ! empty($array_pid))
 		{
 			$array_cid = array();
@@ -55,38 +56,18 @@ class Browser extends MY_Controller
 			}
 			$data['colors'] = $this->product_model->get_list_color_by_cid($array_cid);
 		}
+		//End lay color_id ra view
+		$config = array();
+		$config['base_url'] = base_url('index.php/product/filter/');
+		$config['total_rows'] = count($array_pid);
+		$config['per_page'] = per_03;
+		$config['uri_segment'] = 4;
 
-		$str_where_clause = "";
-		if (isset($catid))
-		{
-			$str_where_clause = $this->product_model->get_str_where_clause($catid , $array_pid);
-		}
-		else
-		{
-			$amt = $this->input->post('amount');
-			$range = explode(' - ', $amt);
-			$min = ltrim($range[0],'$');
-			$max = ltrim($range[1],'$');
-			$color_id = $this->input->post('color_id');
-
-			if (isset($color_id))
-			{
-				$str_where_clause = $this->product_model->get_str_where_clause($catid , $array_pid , $color_id , $amt , $min , $max );
-			}
-			else
-			{
-				$str_where_clause = $this->product_model->get_str_where_clause($catid , $array_pid , $color_id = NULL, $amt , $min , $max );
-			}
-		}
-
-		$total = $this->product_model->count_records_limt($str_where_clause);
-		$base_url = base_url('index.php/browser/index/' . $catid);
-		$config = $this->pagination($base_url, $total);
 		$this->pagination->initialize($config);
 		$data['pagination_home_product'] = $this->pagination->create_links();
 		$start = (int) $this->uri->segment(4);
 
-		$products = $this->product_model->get_records_limit($str_where_clause, $config['per_page'], $start);
+		$products = $this->product_model->get_list_product_by_id($config['per_page'], $start, $array_pid);
 
 		if ( ! empty($products))
 		{
@@ -106,17 +87,6 @@ class Browser extends MY_Controller
 			$this->template->parse_view('content', 'product', $data);
 			$this->template->render();
 		}
-	}
-
-	public function pagination($base_url, $total)
-	{
-		$config = array();
-		$config['base_url'] = $base_url;
-		$config['total_rows'] = $total;
-		$config['per_page'] = per_02;
-		$config['uri_segment'] = 4;
-
-		return $config;
 	}
 
 }

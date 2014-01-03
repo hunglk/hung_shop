@@ -57,15 +57,13 @@ if (isset($max) && isset($min))
 						foreach ($colors as $color)
 						{
 					?>
-						<input type="checkbox" id="color_id" name="color_id[]"
-							   value="<?php echo $color['color_id']; ?>">
+						<input type="checkbox" id="color_id" name="color_id[]" value="<?php echo $color['color_id']; ?>">
 						<?php echo $color['name']; ?>
 					<?php
 						}
 					}
 					?>
 				</div>
-				<input type="submit" class="search-submit" name="filter_submit" value="Filter"/>
 			</div>
 		</div>
 		<!-- End Filter -->
