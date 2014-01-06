@@ -15,7 +15,6 @@ class Category_model extends CI_Model
 		{
 			$this->db->where($whereclause, NULL, FALSE);
 		}
-
 		$query = $this->db->get($this->table_name);
 		$result = $query->result_array();
 		if ($result)

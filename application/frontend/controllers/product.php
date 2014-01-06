@@ -135,15 +135,14 @@ class Product extends MY_Controller
 		$range = explode(' - ', $amt);
 		$min = ltrim($range[0],'$');
 		$max = ltrim($range[1],'$');
-		$colors = $this->product_model->get_pid_by_amount($min, $max);
+		$pro_price = $this->product_model->get_pid_by_amount($min, $max);
 		$array_cid = array();
-		foreach ($colors as $color)
+		foreach ($pro_price as $pro)
 		{
-			$array_cid[] = $color['color_id'];
+			$array_cid[] = $pro['color_id'];
 		}
-		//print_r($array_cid); exit;
+
 		$data['colors'] = $this->product_model->get_list_color_by_cid($array_cid);
-		//echo $data['colors'];exit;
 		$this->load->view('color_filter_ajax',$data);
 	}
 

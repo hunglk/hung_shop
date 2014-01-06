@@ -159,8 +159,9 @@ class Product_model extends CI_Model
 
 	public function get_pid_by_amount($min, $max)
 	{
-		$this->db->where('price >', $min);
-		$this->db->where('price <', $max);
+		$this->db->where('price >=', $min);
+		$this->db->where('price <=', $max);
+		//echo $this->db->last_query();exit;
 		return $this->db->get($this->table_name)->result_array();
 	}
 //PRODUCT CATEGORY
@@ -203,6 +204,7 @@ class Product_model extends CI_Model
 	public function get_list_color_by_cid($array_cid)
 	{
 		$this->db->where_in('color_id', $array_cid);
+		//echo $this->db->last_query();
 		return $this->db->get('shop_color')->result_array();
 	}
 
