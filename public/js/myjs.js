@@ -9,21 +9,17 @@ $(document).ready(function () {
 
 function load_filter_color()
 {
-    //$("#filter_color").html('load filter');
+    console.log('chimchim');
+    console.log($('#amount').val());
     $.ajax({
         type: 'POST',
         url: root_url + 'index.php/product/set_color_filter',
         data: {
-            "cur_price" : $('#hiddent_current_price').val(),
+            "amount" : $('#amount').val(),
             datatype: 'json'
         },
         success: function (kq) {
-            var data = $.parseJSON(kq);
-            alert(kq);
-            $.each(data, function(){
-                $('input[name="color_id[]"]').val("123123");
-               //alert(this.color_id);
-            });
+            $("#filter_color").html(kq);
         }
     }).done(function () {
 
@@ -31,7 +27,8 @@ function load_filter_color()
 }
 
 function checkbox(){
-    $('input[name="color_id[]"]').change(function(){
+    $("#filter_color").on("change", 'input[name="color_id[]"]', function(){
+    //$('input[name="color_id[]"]').change(function(){
         var count_checked = 0;
         $('input[name="color_id[]"]').each(function () {
             if($(this).is(':checked'))
@@ -67,7 +64,6 @@ function filter()
         },
         success: function (kq) {
             $("#prod_content").html(kq);
-            //load_filter_color();
         }
     }).done(function () {
 
@@ -85,6 +81,7 @@ function slider_product() {
         },
         change: function( event, ui ) {
             filter();
+            load_filter_color();
         }
     });
     $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +

@@ -10,7 +10,7 @@ class Browser extends MY_Controller
 		$this->load->Model('product_model');
 	}
 
-	public function show_cat_id(&$array_cat_id, $cats)
+	protected function show_cat_id(&$array_cat_id, $cats)
 	{
 		if (! empty ($cats))
 		{

@@ -79,7 +79,4 @@
 	<p class="right"> &copy; 2010 Shop Around. Design by <a href="http://chocotemplates.com">Chocotemplates.com</a></p>
 </div>
 <!-- End Footer -->
-</div>
-<!-- End Shell -->
-</body>
-</html>
+

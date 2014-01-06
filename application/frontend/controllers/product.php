@@ -41,7 +41,7 @@ class Product extends MY_Controller
 		}
 	}
 
-	public function show_cat_id(&$array_cat_id, $cats)
+	protected function show_cat_id(&$array_cat_id, $cats)
 	{
 		if (! empty ($cats))
 		{
@@ -131,7 +131,7 @@ class Product extends MY_Controller
 
 	public function set_color_filter()
 	{
-		$amt = $this->input->post('cur_price');
+		$amt = $this->input->post('amount');
 		$range = explode(' - ', $amt);
 		$min = ltrim($range[0],'$');
 		$max = ltrim($range[1],'$');
@@ -142,9 +142,9 @@ class Product extends MY_Controller
 			$array_cid[] = $color['color_id'];
 		}
 		//print_r($array_cid); exit;
-		$data['colors'] = json_encode($this->product_model->get_list_color_by_cid($array_cid));
-		echo $data['colors'];exit;
-		//$this->load->view('color_filter_ajax',$data);
+		$data['colors'] = $this->product_model->get_list_color_by_cid($array_cid);
+		//echo $data['colors'];exit;
+		$this->load->view('color_filter_ajax',$data);
 	}
 
 	public function detail($proid)

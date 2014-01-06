@@ -16,7 +16,8 @@ if (isset($max) && isset($min))
 				$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
 			},
 			change: function( event, ui ) {
-			filter();
+				filter();
+				load_filter_color();
 		}
 		});
 		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
@@ -58,7 +59,7 @@ if (isset($max) && isset($min))
 						{
 					?>
 						<input type="checkbox" id="color_id" name="color_id[]" value="<?php echo $color['color_id']; ?>">
-						<?php echo $color['name']; ?>
+						<span><?php echo $color['name']; ?></span>
 					<?php
 						}
 					}
